@@ -1,4 +1,4 @@
-// yooo - web components
+// hmcards.js - Harmelin Media Cards made w/ CSS
 const flipCard = (targetCardId) => {
   // One function to rule them (cards) all
   let targetCard = targetCardId;
@@ -12,17 +12,10 @@ const flipCard = (targetCardId) => {
   // }
   targetCard.dataset.flipped = targetCard.dataset.flipped === '0' ? '1' : '0'
 }
-// 
-// Web Components
-// 
+
 class HMCard extends HTMLElement {
   constructor() {
     super();
-  }
-  flipCard() {
-    // We Never get here...
-    alert('flip-a-delphia')
-    this.dataset.flipped = this.dataset.flipped === '0' ? '1' : '0'
   }
   connectedCallback() {
     const cardId = `card${this.getAttribute('name')}`
@@ -30,23 +23,25 @@ class HMCard extends HTMLElement {
     if (this.hasAttribute('cardbg')) {
       cardClasses = `cardFront ${this.getAttribute('cardbg')}`;
     }
-    this.innerHTML = `<div id=${cardId} class='card' data-flipped='0' onclick="flipCard(${cardId})">
-    <div class='cardInner'>
-      <div class='${cardClasses}'>
-        <div class='cardFrontName'>
-          ${this.getAttribute('name')}
-        </div>
-          <img class='cardFrontImage' src='images/${this.getAttribute('img')}' />
-        <div class='cardFrontNotes'>
-          ${this.getAttribute('notes')}
+    this.innerHTML = `<div>
+      <!-- TODO: styles one day -->
+      <div id=${cardId} class='card' data-flipped='0' onclick="flipCard(${cardId})">
+        <div class='cardInner'>
+          <div class='${cardClasses}'>
+            <div class='cardFrontName'>
+              ${this.getAttribute('name')}
+            </div>
+              <img class='cardFrontImage' src='images/${this.getAttribute('img')}' />
+            <div class='cardFrontNotes'>
+              ${this.getAttribute('notes')}
+            </div>
+          </div>
+          <div class='cardBack'>
+            <div class='cardBackCircle'></div>
+          </div>
         </div>
       </div>
-      <div class='cardBack'>
-        <div class='cardBackCircle'></div>
-      </div>
-    </div>
-  </div>`;
+    </div>`;
   }
-  
 }
 customElements.define('hm-card', HMCard);
