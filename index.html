@@ -41,6 +41,14 @@ tequilla
         transform: rotateY(180deg);
         transition: transform 0.76s;
       }
+      .card[data-flipped="1"]:hover {
+        transform: rotateY(15deg) scale(1.15);
+        transition: transform 0.76s;
+      }
+      .card[data-flipped="0"]:hover {
+        transform: rotateY(195deg) rotateX(15deg);
+        transition: transform 0.76s;
+      }
       .card {
         border: 1px solid grey;
         position: relative;
@@ -72,6 +80,10 @@ tequilla
       }
       .shinyblue {
         background-color: skyblue;
+      }
+      .shinypurple {
+        background-color: rebeccapurple;
+        filter: brightness(2.0);
       }
       .cardBack {
         transform: rotateY(180deg);
@@ -118,16 +130,26 @@ tequilla
         notes='"When you are here, you are family."'
       ></hm-card>
       <hm-card
-        name='SleepyHank2'
+        name='SleepyHank'
         img='sleepyhank.png'
         notes='"Facebook is Big Brother."'
-        cardbg='shinyblue'
       ></hm-card>
       <hm-card
         name='Tequila'
         img='tequila.png'
         notes='"Better than water."'
         cardbg='shinyblue'
+      ></hm-card>
+      <hm-card
+        name='Chelsea'
+        img='chelsea.png'
+        notes='Queen of data'
+        cardbg='shinypurple'
+      ></hm-card>
+      <hm-card
+        name='Conor'
+        img='conor.jpg'
+        notes='"I am just making this up."'
       ></hm-card>
       <!-- TODO: Add one hm-card for each Dev Team member -->
     </div>
