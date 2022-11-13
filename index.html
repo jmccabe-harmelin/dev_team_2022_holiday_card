@@ -16,8 +16,7 @@ tequilla
       }
       @media screen and (max-width: 600px) {
         .card {
-
-          margin: 0rem;  
+          margin: 0rem;
         }
       }
       .cardHolder {
@@ -56,8 +55,8 @@ tequilla
         position: relative;
 /*        padding: 1rem;*/
         margin: 1rem;
-        height: 10rem;
-        width: 6rem;
+        height: 20rem;
+        width: 12rem;
 /*        border: 5px outset grey;*/
 /*        background-color: blue;*/
         transform-style: preserve-3d;
@@ -92,6 +91,9 @@ tequilla
 /*        transform: rotateY(180deg);*/
 color: black;
       }
+      .shinyblue {
+        background-color: skyblue;
+      }
       .cardBack {
         transform: rotateY(180deg);
 /*        position: absolute;*/
@@ -112,7 +114,7 @@ color: black;
       .cardFrontName {
 /*        border: 1px solid red;*/
 
-        font-size: 0.75rem;
+        font-size: 1.75rem;
         padding: 0.25rem;
       }
       .cardFrontImage {
@@ -127,7 +129,8 @@ color: black;
 /*        border: 1px solid red;*/
         font-family: serif;
         padding: 0.25rem;
-        font-size: 0.5rem;
+        font-size: 0.76rem;
+        font-style: italic;
       }
     </style>
   </head>
@@ -136,9 +139,54 @@ color: black;
     <div>2022</div>
     <script>
     const flipCard = (targetCardId) => {
-      const targetCard = document.getElementById(targetCardId);
+      console.log('flipCard', );
+      let targetCard = targetCardId;
+      if (typeof(targetCardId) === "string") {
+        console.log('bro')
+        targetCard = document.getElementById(targetCardId);
+      } else {
+        console.log('brooooo')
+      }
+      console.log('flipCard2', targetCard)
       targetCard.dataset.flipped = targetCard.dataset.flipped === '0' ? '1' : '0'
     }
+    // 
+    // Web Components
+    // 
+    class HMCard extends HTMLElement {
+      constructor() {
+        super();
+      }
+      flipCard() {
+        alert('flip-a-delphia')
+        this.dataset.flipped = this.dataset.flipped === '0' ? '1' : '0'
+      }
+      connectedCallback() {
+        const cardId = `card${this.getAttribute('name')}`
+        let cardClasses = `cardFront`;
+        if (this.hasAttribute('cardbg')) {
+          cardClasses = `cardFront ${this.getAttribute('cardbg')}`;
+        }
+        this.innerHTML = `<div id=${cardId} class='card' data-flipped='0' onclick="flipCard(${cardId})">
+        <div class='cardInner'>
+          <div class='${cardClasses}'>
+            <div class='cardFrontName'>
+              ${this.getAttribute('name')}
+            </div>
+              <img class='cardFrontImage' src='images/${this.getAttribute('img')}.png' />
+            <div class='cardFrontNotes'>
+              ${this.getAttribute('notes')}
+            </div>
+          </div>
+          <div class='cardBack'>
+            <div class='cardBackCircle'></div>
+          </div>
+        </div>
+      </div>`;
+      }
+      
+    }
+    customElements.define('hm-card', HMCard);
   </script>
     <div class='cardHolder'>
       <div id='card1' class='card' data-flipped='0' onclick="flipCard('card1')">
@@ -173,6 +221,17 @@ color: black;
           </div>
         </div>
       </div>
+      <hm-card
+        name='John'
+        img='john.jpg'
+        notes='"When you are here, you are family."'
+      ></hm-card>
+      <hm-card
+        name='SleepyHank2'
+        img='sleepyhank.png'
+        notes='"Facebook is Big Brother."'
+        cardbg='shinyblue'
+      ></hm-card>
     </div>
   </body>
 </html>
