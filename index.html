@@ -5,6 +5,7 @@ tequilla
 <html>
   <head>
     <link rel='stylesheet' src='index.css' />
+    <script src='hmcards.js'></script>
     <style type='text/css'>
       * {
 /*        border: 1px dashed orange;*/
@@ -14,21 +15,19 @@ tequilla
         color: gold;
         font-family: sans-serif;
       }
-      @media screen and (max-width: 600px) {
-        .card {
-          margin: 0rem;
-        }
+      .pageheader {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
       }
       .cardHolder {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         width: 100vw;
-/*        height: 75vh;*/
         justify-content: center;
         align-items: center;
-        /*-webkit-perspective: 1000px;
-        perspective: 1000px;*/
       }
       .card:hover {
         border: 1px outset red;
@@ -42,14 +41,6 @@ tequilla
         transform: rotateY(180deg);
         transition: transform 0.76s;
       }
-      /*.card[data-flipped="0"] .cardBack {
-        z-index: 51;
-        transition: transform 0.76s;
-      }
-      .card[data-flipped="1"] .cardBack {
-        z-index: 49;
-        transition: transform 0.76s;
-      }*/
       .card {
         border: 1px solid grey;
         position: relative;
@@ -135,92 +126,64 @@ color: black;
     </style>
   </head>
   <body>
-    <h1>Happy Holidays</h1>
-    <div>2022</div>
     <script>
-    const flipCard = (targetCardId) => {
-      console.log('flipCard', );
-      let targetCard = targetCardId;
-      if (typeof(targetCardId) === "string") {
-        console.log('bro')
-        targetCard = document.getElementById(targetCardId);
-      } else {
-        console.log('brooooo')
-      }
-      console.log('flipCard2', targetCard)
-      targetCard.dataset.flipped = targetCard.dataset.flipped === '0' ? '1' : '0'
-    }
-    // 
-    // Web Components
-    // 
-    class HMCard extends HTMLElement {
-      constructor() {
-        super();
-      }
-      flipCard() {
-        alert('flip-a-delphia')
-        this.dataset.flipped = this.dataset.flipped === '0' ? '1' : '0'
-      }
-      connectedCallback() {
-        const cardId = `card${this.getAttribute('name')}`
-        let cardClasses = `cardFront`;
-        if (this.hasAttribute('cardbg')) {
-          cardClasses = `cardFront ${this.getAttribute('cardbg')}`;
-        }
-        this.innerHTML = `<div id=${cardId} class='card' data-flipped='0' onclick="flipCard(${cardId})">
-        <div class='cardInner'>
-          <div class='${cardClasses}'>
-            <div class='cardFrontName'>
-              ${this.getAttribute('name')}
-            </div>
-              <img class='cardFrontImage' src='images/${this.getAttribute('img')}' />
-            <div class='cardFrontNotes'>
-              ${this.getAttribute('notes')}
-            </div>
-          </div>
-          <div class='cardBack'>
-            <div class='cardBackCircle'></div>
-          </div>
-        </div>
-      </div>`;
-      }
-      
-    }
-    customElements.define('hm-card', HMCard);
+    // const flipCard = (targetCardId) => {
+    //   // One function to rule them (cards) all
+    //   let targetCard = targetCardId;
+    //   if (typeof(targetCardId) === "string") {
+    //     targetCard = document.getElementById(targetCardId);
+    //   }
+    //   // TODO: Consider resetting all the other cards
+    //   // const cards = document.getElementsByClassName('card')
+    //   // for (let i = 0; i < cards.length; i++) {
+    //   //   cards[i].dataset.flipped = '0'; // reset everyone
+    //   // }
+    //   targetCard.dataset.flipped = targetCard.dataset.flipped === '0' ? '1' : '0'
+    // }
+    // // 
+    // // Web Components
+    // // 
+    // class HMCard extends HTMLElement {
+    //   constructor() {
+    //     super();
+    //   }
+    //   flipCard() {
+    //     // We Never get here...
+    //     alert('flip-a-delphia')
+    //     this.dataset.flipped = this.dataset.flipped === '0' ? '1' : '0'
+    //   }
+    //   connectedCallback() {
+    //     const cardId = `card${this.getAttribute('name')}`
+    //     let cardClasses = `cardFront`;
+    //     if (this.hasAttribute('cardbg')) {
+    //       cardClasses = `cardFront ${this.getAttribute('cardbg')}`;
+    //     }
+    //     this.innerHTML = `<div id=${cardId} class='card' data-flipped='0' onclick="flipCard(${cardId})">
+    //     <div class='cardInner'>
+    //       <div class='${cardClasses}'>
+    //         <div class='cardFrontName'>
+    //           ${this.getAttribute('name')}
+    //         </div>
+    //           <img class='cardFrontImage' src='images/${this.getAttribute('img')}' />
+    //         <div class='cardFrontNotes'>
+    //           ${this.getAttribute('notes')}
+    //         </div>
+    //       </div>
+    //       <div class='cardBack'>
+    //         <div class='cardBackCircle'></div>
+    //       </div>
+    //     </div>
+    //   </div>`;
+    //   }
+    //   
+    // }
+    // customElements.define('hm-card', HMCard);
   </script>
+    <div class='pageheader'>
+      <h1>Happy Holidays</h1>
+      <div>2022</div>
+    </div>
     <div class='cardHolder'>
-      <div id='card1' class='card' data-flipped='0' onclick="flipCard('card1')">
-        <div class='cardInner'>
-          <div class='cardFront'>
-            <div class='cardFrontName'>
-              Sleepy Hank
-            </div>
-              <img class='cardFrontImage' src='images/sleepyhank.png' />
-            <div class='cardFrontNotes'>
-              "Fly you fools"
-            </div>
-          </div>
-          <div class='cardBack'>
-            <div class='cardBackCircle'></div>
-          </div>
-        </div>
-      </div>
-      <div id='card2' class='card' data-flipped='0' onclick="flipCard('card2')">
-        <div class='cardInner'>
-          <div class='cardFront'>
-            <div class='cardFrontName'>
-              John
-            </div>
-              <img class='cardFrontImage' src='images/john.jpg' />
-            <div class='cardFrontNotes'>
-              "When you're here, you're family!"
-            </div>
-          </div>
-          <div class='cardBack'>
-            <div class='cardBackCircle'></div>
-          </div>
-        </div>
-      </div>
       <hm-card
         name='John'
         img='john.jpg'
@@ -232,6 +195,13 @@ color: black;
         notes='"Facebook is Big Brother."'
         cardbg='shinyblue'
       ></hm-card>
+      <hm-card
+        name='Tequila'
+        img='tequila.png'
+        notes='"Better than water."'
+        cardbg='shinyblue'
+      ></hm-card>
+      <!-- TODO: Add one hm-card for each Dev Team member -->
     </div>
   </body>
 </html>
