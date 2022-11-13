@@ -44,29 +44,18 @@ tequilla
       .card {
         border: 1px solid grey;
         position: relative;
-/*        padding: 1rem;*/
         margin: 1rem;
         height: 20rem;
         width: 12rem;
-/*        border: 5px outset grey;*/
-/*        background-color: blue;*/
         transform-style: preserve-3d;
         -webkit-perspective: 1000px;
         perspective: 1000px;
         transform: rotateY(0deg);
       }
-      /*.cardInner:hover {
-        z-index: 100;
-        transform: rotateY(0deg) scale(2.0);
-        transition: transform 0.76s;
-      }*/
       .cardInner {
         position: absolute;
         height: 100%;
         width: 100%;
-/*        transform: rotateY(180deg);*/
-        /*-webkit-backface-visibility: visible;
-        backface-visibility: visible;*/
       }
       .cardFront, .cardBack {
         -webkit-backface-visibility: hidden;
@@ -79,15 +68,13 @@ tequilla
         background-color: coral;
         -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
-/*        transform: rotateY(180deg);*/
-color: black;
+        color: black;
       }
       .shinyblue {
         background-color: skyblue;
       }
       .cardBack {
         transform: rotateY(180deg);
-/*        position: absolute;*/
         display: flex;
         justify-content: center;
         align-items: center;
@@ -103,21 +90,15 @@ color: black;
         width: 50%;
       }
       .cardFrontName {
-/*        border: 1px solid red;*/
-
         font-size: 1.75rem;
         padding: 0.25rem;
       }
       .cardFrontImage {
-/*        padding: 0.1rem;*/
-/*        margin: 1px;*/
         border: 1px inset grey;
         margin: 0.1rem;
         width: 95%;
-/*        height: 5rem;*/
       }
       .cardFrontNotes {
-/*        border: 1px solid red;*/
         font-family: serif;
         padding: 0.25rem;
         font-size: 0.76rem;
@@ -126,59 +107,6 @@ color: black;
     </style>
   </head>
   <body>
-    <script>
-    // const flipCard = (targetCardId) => {
-    //   // One function to rule them (cards) all
-    //   let targetCard = targetCardId;
-    //   if (typeof(targetCardId) === "string") {
-    //     targetCard = document.getElementById(targetCardId);
-    //   }
-    //   // TODO: Consider resetting all the other cards
-    //   // const cards = document.getElementsByClassName('card')
-    //   // for (let i = 0; i < cards.length; i++) {
-    //   //   cards[i].dataset.flipped = '0'; // reset everyone
-    //   // }
-    //   targetCard.dataset.flipped = targetCard.dataset.flipped === '0' ? '1' : '0'
-    // }
-    // // 
-    // // Web Components
-    // // 
-    // class HMCard extends HTMLElement {
-    //   constructor() {
-    //     super();
-    //   }
-    //   flipCard() {
-    //     // We Never get here...
-    //     alert('flip-a-delphia')
-    //     this.dataset.flipped = this.dataset.flipped === '0' ? '1' : '0'
-    //   }
-    //   connectedCallback() {
-    //     const cardId = `card${this.getAttribute('name')}`
-    //     let cardClasses = `cardFront`;
-    //     if (this.hasAttribute('cardbg')) {
-    //       cardClasses = `cardFront ${this.getAttribute('cardbg')}`;
-    //     }
-    //     this.innerHTML = `<div id=${cardId} class='card' data-flipped='0' onclick="flipCard(${cardId})">
-    //     <div class='cardInner'>
-    //       <div class='${cardClasses}'>
-    //         <div class='cardFrontName'>
-    //           ${this.getAttribute('name')}
-    //         </div>
-    //           <img class='cardFrontImage' src='images/${this.getAttribute('img')}' />
-    //         <div class='cardFrontNotes'>
-    //           ${this.getAttribute('notes')}
-    //         </div>
-    //       </div>
-    //       <div class='cardBack'>
-    //         <div class='cardBackCircle'></div>
-    //       </div>
-    //     </div>
-    //   </div>`;
-    //   }
-    //   
-    // }
-    // customElements.define('hm-card', HMCard);
-  </script>
     <div class='pageheader'>
       <h1>Happy Holidays</h1>
       <div>2022</div>
