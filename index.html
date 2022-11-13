@@ -7,11 +7,12 @@ tequilla
     <link rel='stylesheet' src='index.css' />
     <style type='text/css'>
       * {
-        border: 1px dashed orange;
+/*        border: 1px dashed orange;*/
       }
       body {
         background-color: black;
         color: gold;
+        font-family: sans-serif;
       }
       @media screen and (max-width: 600px) {
         .card {
@@ -27,68 +28,145 @@ tequilla
 /*        height: 75vh;*/
         justify-content: center;
         align-items: center;
-        perspective: 1000px;
+        /*-webkit-perspective: 1000px;
+        perspective: 1000px;*/
       }
+      .card:hover {
+        border: 1px outset red;
+        cursor: pointer;
+      }
+      .card[data-flipped="1"] {
+        transform: rotateY(0deg);
+        transition: transform 0.76s;
+      }
+      .card[data-flipped="0"] {
+        transform: rotateY(180deg);
+        transition: transform 0.76s;
+      }
+      /*.card[data-flipped="0"] .cardBack {
+        z-index: 51;
+        transition: transform 0.76s;
+      }
+      .card[data-flipped="1"] .cardBack {
+        z-index: 49;
+        transition: transform 0.76s;
+      }*/
       .card {
+        border: 1px solid grey;
         position: relative;
-        padding: 1rem;
+/*        padding: 1rem;*/
         margin: 1rem;
         height: 10rem;
         width: 6rem;
 /*        border: 5px outset grey;*/
 /*        background-color: blue;*/
         transform-style: preserve-3d;
-        transform: rotateY(180deg);
+        -webkit-perspective: 1000px;
+        perspective: 1000px;
+        transform: rotateY(0deg);
       }
-      .cardInner:hover {
-/*        border: 5px inset grey;*/
+      /*.cardInner:hover {
         z-index: 100;
         transform: rotateY(0deg) scale(2.0);
         transition: transform 0.76s;
-      }
+      }*/
       .cardInner {
-        height: 90%;
-        width: 90%;
-        transform: rotateY(180deg);
-/*        margin: -1rem;*/
+        position: absolute;
+        height: 100%;
+        width: 100%;
+/*        transform: rotateY(180deg);*/
+        /*-webkit-backface-visibility: visible;
+        backface-visibility: visible;*/
+      }
+      .cardFront, .cardBack {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
       }
       .cardFront {
         position: absolute;
-        height: 90%;
-        width: 90%;
+        height: 100%;
+        width: 100%;
         background-color: coral;
+        -webkit-backface-visibility: hidden;
         backface-visibility: hidden;
-        transform: rotateY(180deg);
-/*        padding: 0.5rem;*/
+/*        transform: rotateY(180deg);*/
+color: black;
       }
       .cardBack {
-/*        transform: rotateY(180deg);*/
-        position: absolute;
+        transform: rotateY(180deg);
+/*        position: absolute;*/
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100%;
         width: 100%;
         background-color: red;
-/*        border: 0.1rem outset grey;*/
-        backface-visibility: hidden;
       }
       .cardBackCircle {
         border-radius: 100%;
-        background-color: crimson;
+        background-color: firebrick;
+        border: 1px inset crimson;
         height: 50%;
         width: 50%;
+      }
+      .cardFrontName {
+/*        border: 1px solid red;*/
+
+        font-size: 0.75rem;
+        padding: 0.25rem;
+      }
+      .cardFrontImage {
+/*        padding: 0.1rem;*/
+/*        margin: 1px;*/
+        border: 1px inset grey;
+        margin: 0.1rem;
+        width: 95%;
+/*        height: 5rem;*/
+      }
+      .cardFrontNotes {
+/*        border: 1px solid red;*/
+        font-family: serif;
+        padding: 0.25rem;
+        font-size: 0.5rem;
       }
     </style>
   </head>
   <body>
     <h1>Happy Holidays</h1>
     <div>2022</div>
+    <script>
+    const flipCard = (targetCardId) => {
+      const targetCard = document.getElementById(targetCardId);
+      targetCard.dataset.flipped = targetCard.dataset.flipped === '0' ? '1' : '0'
+    }
+  </script>
     <div class='cardHolder'>
-      <div class='card'>
+      <div id='card1' class='card' data-flipped='0' onclick="flipCard('card1')">
         <div class='cardInner'>
           <div class='cardFront'>
-            Test
+            <div class='cardFrontName'>
+              Sleepy Hank
+            </div>
+              <img class='cardFrontImage' src='sleepyhank.png' />
+            <div class='cardFrontNotes'>
+              "Fly you fools"
+            </div>
+          </div>
+          <div class='cardBack'>
+            <div class='cardBackCircle'></div>
+          </div>
+        </div>
+      </div>
+      <div id='card2' class='card' data-flipped='0' onclick="flipCard('card2')">
+        <div class='cardInner'>
+          <div class='cardFront'>
+            <div class='cardFrontName'>
+              John
+            </div>
+              <img class='cardFrontImage' src='john.jpg' />
+            <div class='cardFrontNotes'>
+              "When you're here, you're family!"
+            </div>
           </div>
           <div class='cardBack'>
             <div class='cardBackCircle'></div>
