@@ -18,10 +18,15 @@ class HMCard extends HTMLElement {
     super();
   }
   connectedCallback() {
-    const cardId = `card${this.getAttribute('name')}`
+    const cardName = this.getAttribute('name');
+    const cardId = `card${cardName}`.replaceAll(' ', '');
     let cardClasses = `cardFront`;
     if (this.hasAttribute('cardbg')) {
       cardClasses = `cardFront ${this.getAttribute('cardbg')}`;
+    }
+    let rookieCard = '';
+    if (this.hasAttribute('rookie')) {
+      rookieCard = `<div class='rookie'>Rookie Card</div>`;
     }
     this.innerHTML = `<div>
       <!-- TODO: styles one day -->
@@ -29,9 +34,10 @@ class HMCard extends HTMLElement {
         <div class='cardInner'>
           <div class='${cardClasses}'>
             <div class='cardFrontName'>
-              ${this.getAttribute('name')}
+              ${cardName}
+              ${rookieCard}
             </div>
-              <img class='cardFrontImage' src='images/${this.getAttribute('img')}' />
+              <img class='cardFrontImage' src='images/${this.getAttribute('img')}' alt='A photo of ${cardName}' />
             <div class='cardFrontNotes'>
               ${this.getAttribute('notes')}
             </div>
