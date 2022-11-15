@@ -26,18 +26,28 @@ class HMCard extends HTMLElement {
     }
     let rookieCard = '';
     if (this.hasAttribute('rookie')) {
-      rookieCard = `<div class='rookie'>Rookie Card</div>`;
+      rookieCard = `<div class='rookie'>- Rookie Card -</div>`;
     }
+    let shinyStuff = '';
+    if (this.hasAttribute('shiny')) {
+      shinyStuff = `<div class='shiny2'></div><div class='shiny1'></div>`;
+    }
+    // TODO: tabindex='0' and keyup listeners for enter/space
+    // https://developer.mozilla.org/en-US/docs/Web/API/Element/keyup_event
     this.innerHTML = `<div>
       <!-- TODO: styles one day -->
-      <div id=${cardId} class='card' data-flipped='0' onclick="flipCard(${cardId})">
+      <div id=${cardId} class='card' data-flipped='1' onclick="flipCard(${cardId})">
         <div class='cardInner'>
           <div class='${cardClasses}'>
+            ${shinyStuff}
             <div class='cardFrontName'>
               ${cardName}
               ${rookieCard}
             </div>
-              <img class='cardFrontImage' src='images/${this.getAttribute('img')}' alt='A photo of ${cardName}' />
+            <img class='cardFrontImage' src='images/${this.getAttribute('img')}' alt='A photo of ${cardName}' />
+            <div class='cardFrontPillarTeam'>
+              ${this.getAttribute('pillar')} - ${this.getAttribute('team')}
+            </div>
             <div class='cardFrontNotes'>
               ${this.getAttribute('notes')}
             </div>
