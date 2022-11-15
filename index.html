@@ -102,22 +102,29 @@ tequilla
         width: 50%;
       }
       .cardFrontName {
-        font-size: 1.75rem;
+        font-size: 1.25rem;
+        padding: 0.25rem;
+      }
+      .cardFrontPillarTeam {
+        font-family: monospace;
+        font-size: 1rem;
         padding: 0.25rem;
       }
       .rookie {
         border: 1px outset green;
         background-color: limegreen;
-        font-size: 1rem;
+        font-size: 0.75rem;
         float: right;
-        padding: 0.1rem;
+        padding: 0.2rem;
         margin: 0.2rem;
         border-radius: 0.5rem;
+
+        position: absolute;
+        right: 0;
       }
       .cardFrontImage {
-        border: 1px inset grey;
-        margin: 0.1rem;
-        width: 95%;
+        width: 100%;
+        aspect-ratio: 1 / 1;
       }
       .cardFrontNotes {
         font-family: serif;
@@ -125,7 +132,46 @@ tequilla
         font-size: 0.76rem;
         font-style: italic;
       }
+      .shiny1, .shiny2 {
+/*        background-color: red;*/
+        position: absolute;
+        height: 100%;
+        width: 100%;
+      }
+      @keyframes shine {
+        from {
+          background-position: 0% 50%;
+        } to {
+          background-position: 100% 50%;
+        }
+      }
+      .shiny1 { /* Specular */
+        background-image: linear-gradient(90deg, black, white, black);
+        mix-blend-mode: color-dodge;
+        background-attachment: fixed;
+        background-size: 200%;
+/*        background-position: var(--x) var(--y);*/
+        animation: shine 1s ease-in-out alternate;
+      }
+      .shiny2 { /* Mask */
+        mix-blend-mode: multiply;
+        background-image: url('images/foil.jpg');
+        background-size: cover;
+        background-position: center;
+        background-clip: border-box;
+        opacity: 0.6;
+      }
     </style>
+    <script type="text/javascript">
+      const pos = {x:0,y:0};
+      const saveCursorPosition = (x, y) => {
+        pos.x = (x / window.innerWidth).toFixed(2);
+        pos.y = (y / window.innerHeight).toFixed(2);
+        document.documentElement.style.setProperty('--x', pos.x * 100 + '%')
+        document.documentElement.style.setProperty('--y', pos.y * 100 + '%')
+      }
+      // document.addEventListener('mousemove', e => saveCursorPosition(e.clientX, e.clientY));
+    </script>
     <title>2022 Holiday Card</title>
   </head>
   <body>
@@ -133,7 +179,7 @@ tequilla
       <h1>Happy Holidays</h1>
       <div>2022</div>
     </div>
-    <div class='cardHolder'>
+    <!-- <div class='cardHolder'>
       <hm-card
         name='John'
         img='john.jpg'
@@ -150,17 +196,6 @@ tequilla
         notes='Better than water.'
         cardbg='shinyblue'
       ></hm-card>
-      <!-- <hm-card
-        name='Chelsea'
-        img='chelsea.png'
-        notes='Queen of data'
-        cardbg='shinypurple'
-      ></hm-card>
-      <hm-card
-        name='Conor'
-        img='conor.jpg'
-        notes='"I am just making this up."'
-      ></hm-card> -->
       <hm-card
         name='Joe'
         img='joe.png'
@@ -177,7 +212,167 @@ tequilla
         img='davehat.png'
         notes='"My bucket-hat gives me unlimited super-human media abilities!"'
       ></hm-card>
-      <!-- TODO: Add one hm-card for each Dev Team member -->
-    </div>
+    </div> -->
+    <div id='cardspot'></div>
+    <script type="text/javascript">
+      const tech_team = [
+        {
+          name: 'David Adams',
+          pillar: 'Technology',
+          team: 'AdOps',
+        },
+        {
+          name: 'Brandin Bulicki',
+          pillar: 'Technology',
+          team: 'Dev Team',
+        },
+        {
+          name: 'Mark Chawla',
+          pillar: 'Technology',
+          team: 'Dev Team',
+        },
+        {
+          name: 'Nicolette Dankmyer',
+          pillar: 'Technology',
+          team: 'R&A',
+        },
+        {
+          name: 'Matthew DeSabato',
+          pillar: 'Technology',
+          team: 'IT',
+        },
+        {
+          name: 'Shawn Dillon',
+          pillar: 'Technology',
+          team: 'IT',
+        },
+        {
+          name: 'Conor Elliott',
+          pillar: 'Technology',
+          team: 'Executive',
+        },
+        {
+          name: 'Keith Elliott',
+          pillar: 'Technology',
+          team: 'R&A',
+        },
+        {
+          name: 'Joe Fedorowicz',
+          pillar: 'Technology',
+          team: 'Dev Team',
+          img: 'joe.png',
+          notes: '"Already done."',
+        },
+        {
+          name: 'Chelsea Fletcher',
+          pillar: 'Technology',
+          team: 'R&A',
+          cardbg: 'shinypurple',
+          // shiny: true,
+        },
+        {
+          name: 'Joey Garrous',
+          pillar: 'Technology',
+          team: 'AdOps',
+        },
+        {
+          name: 'Robert Heimbach',
+          pillar: 'Technology',
+          team: 'AdOps',
+          notes: 'Sleaves optional',
+        },
+        {
+          name: 'Zena Johnson',
+          pillar: 'Technology',
+          team: 'AdOps',
+        },
+        {
+          name: 'Reuben Martinez',
+          pillar: 'Technology',
+          team: 'R&A',
+          notes: '"I will take the ring to Mordor."',
+        },
+        {
+          name: 'Michael Maten',
+          pillar: 'Technology',
+          team: 'R&A',
+        },
+        {
+          name: 'John McCabe',
+          pillar: 'Technology',
+          team: 'Dev Team',
+          img: 'john.jpg',
+          notes: '"Lobster Tags!"',
+          // shiny: true, // TODO: More than one type of shiny
+        },
+        {
+          name: 'Tim McWilliams',
+          pillar: 'Technology',
+          team: 'R&A',
+        },
+        {
+          name: 'Jack Mullen',
+          pillar: 'Technology',
+          team: 'AdOps',
+        },
+        {
+          name: 'Hank Mushinski',
+          pillar: 'Technology',
+          team: 'Dev Team',
+          img: 'sleepyhank.png',
+          notes: '"Facebook is Big Brother."',
+          cardbg: 'shinyblue',
+        },
+        {
+          name: 'Joshua Pearlman',
+          pillar: 'Technology',
+          team: 'IT',
+        },
+        {
+          name: 'Matthew Printz',
+          pillar: 'Technology',
+          team: 'IT',
+        },
+        {
+          name: 'Jared Rudenstein',
+          pillar: 'Technology',
+          team: 'IT',
+          img: 'jaredrookie.png',
+          notes: '"Shawn!"',
+          rookie: true,
+        },
+        {
+          name: 'Eva Vukich',
+          pillar: 'Technology',
+          team: 'R&A',
+        },
+        // TODO: Non-people cards?
+        // {
+        //   name: 'Tequila',
+        //   pillar: 'Technology',
+        //   team: 'R&A',
+        //   img: 'tequila.png',
+        //   notes: 'Better than water.',
+        //   cardbg: 'shinyblue',
+        // },
+        // {
+        //   name: 'Coffee',
+        //   pillar: 'Technology',
+        //   team: 'Dev Team',
+        //   img: 'coffee.png',
+        //   notes: 'Better than water.',
+        //   cardbg: 'shinyblue',
+        // },
+      ];
+      const cardspot = document.getElementById('cardspot');
+      let tech_team_cards = '';
+      tech_team.map(x => {
+        tech_team_cards += `<hm-card name='${x.name}' pillar='${x.pillar}' team='${x.team}' img='${x.img}' notes='${x.notes}' cardbg='${x.cardbg}' ${x.rookie ? 'rookie' : ''} ${x.shiny ? 'shiny' : ''}></hm-card>`;
+      });
+      console.log(tech_team_cards);
+      cardspot.innerHTML = `<div class='cardHolder'>
+      ${tech_team_cards}
+      </div>`;
+    </script>
   </body>
 </html>
