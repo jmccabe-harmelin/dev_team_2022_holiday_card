@@ -1,5 +1,8 @@
 <!--
 tequilla
+sardees
+d&d - 
+
 
  -->
 <html>
@@ -59,24 +62,35 @@ tequilla
         -webkit-perspective: 1000px;
         perspective: 1000px;
         transform: rotateY(0deg);
+        backface-visibility: visible;
+/*        -moz-backface-visibility: hidden;*/
       }
       .cardInner {
+        transform: rotateY(0deg);
+        transform-style: preserve-3d;
+        backface-visibility: visible;
         position: absolute;
         height: 100%;
         width: 100%;
       }
       .cardFront, .cardBack {
+        transform: rotateY(0deg);
+        transform-style: preserve-3d;
         -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
         backface-visibility: hidden;
       }
       .cardFront {
+        transform: rotateY(0deg);
         position: absolute;
         height: 100%;
         width: 100%;
         background-color: coral;
         -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
         backface-visibility: hidden;
         color: black;
+/*        opacity: 0;*/
       }
       .shinyblue {
         background-color: skyblue;
@@ -93,6 +107,8 @@ tequilla
         height: 100%;
         width: 100%;
         background-color: red;
+/*        border: 10px dashed red;*/
+
       }
       .cardBackCircle {
         border-radius: 100%;
@@ -124,7 +140,9 @@ tequilla
       }
       .cardFrontImage {
         width: 100%;
+        min-height: 1rem;
         aspect-ratio: 1 / 1;
+        background: linear-gradient(90deg, gold, gray);
       }
       .cardFrontNotes {
         font-family: serif;
@@ -302,7 +320,7 @@ tequilla
           pillar: 'Technology',
           team: 'Dev Team',
           img: 'john.jpg',
-          notes: '"Lobster Tags!"',
+          notes: '"Hack the planet!"',
           // shiny: true, // TODO: More than one type of shiny
         },
         {
@@ -369,7 +387,9 @@ tequilla
       const cardspot = document.getElementById('cardspot');
       let tech_team_cards = '';
       tech_team.map(x => {
-        tech_team_cards += `<hm-card name='${x.name}' pillar='${x.pillar}' team='${x.team}' img='${x.img}' notes='${x.notes}' cardbg='${x.cardbg}' ${x.rookie ? 'rookie' : ''} ${x.shiny ? 'shiny' : ''}></hm-card>`;
+        if (x.img || true) {
+          tech_team_cards += `<hm-card name='${x.name}' pillar='${x.pillar}' team='${x.team}' img='${x.img}' notes='${x.notes}' cardbg='${x.cardbg}' ${x.rookie ? 'rookie' : ''} ${x.shiny ? 'shiny' : ''}></hm-card>`;
+        }
       });
       console.log(tech_team_cards);
       cardspot.innerHTML = `<div class='cardHolder'>
