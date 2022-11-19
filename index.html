@@ -3,6 +3,17 @@ tequilla
 sardees
 d&d - 
 
+default avatars
+TODO:
+- Holographic cards
+- 3d card wobble
+- playable????
+- Square Photos for everyone
+- Quotes for everyone
+- custom bgcolors if anyone wants
+- flip animation now really sudden...
+
+
 
  -->
 <html>
@@ -33,26 +44,27 @@ d&d -
         align-items: center;
       }
       .card:hover {
-        border: 1px outset red;
+/*        border: 1px outset red;*/
         cursor: pointer;
       }
       .card[data-flipped="1"] {
-        transform: rotateY(0deg);
-        transition: transform 0.76s;
+        transform: rotateY(var(--wobble-x)) rotateX(var(--wobble-y));
+/* TODO: Needs to be quick except when flipping... transition: transform 0.76s;*/
       }
       .card[data-flipped="0"] {
-        transform: rotateY(180deg);
+        transform: rotateY(180deg) rotateY(var(--wobble-x)) rotateX(var(--wobble-y));
         transition: transform 0.76s;
       }
-      .card[data-flipped="1"]:hover {
+      /*.card[data-flipped="1"]:hover {
         transform: rotateY(15deg) scale(1.15);
         transition: transform 0.76s;
-      }
-      .card[data-flipped="0"]:hover {
+      }*/
+      /*.card[data-flipped="0"]:hover {
         transform: rotateY(195deg) rotateX(15deg);
         transition: transform 0.76s;
-      }
+      }*/
       .card {
+        transform: rotateY(var(--wobble-x)) rotateX(var(--wobble-y));
         border: 1px solid grey;
         position: relative;
         margin: 1rem;
@@ -142,7 +154,8 @@ d&d -
         width: 100%;
         min-height: 1rem;
         aspect-ratio: 1 / 1;
-        background: linear-gradient(90deg, gold, gray);
+        background: radial-gradient(gold, gray);
+/*        z-index: 100;*/
       }
       .cardFrontNotes {
         font-family: serif;
@@ -164,32 +177,98 @@ d&d -
         }
       }
       .shiny1 { /* Specular */
-        background-image: linear-gradient(90deg, black, white, black);
+/*        background-image: linear-gradient(90deg, black, red, white, blue, black);*/
+        background-image: radial-gradient(black, green, blue, orange, black);
         mix-blend-mode: color-dodge;
         background-attachment: fixed;
         background-size: 200%;
-/*        background-position: var(--x) var(--y);*/
-        animation: shine 1s ease-in-out alternate;
+        background-position: var(--x) var(--y);
+/*        transition: transform 0.76s;*/
+/*        animation: shine 1s ease-in-out alternate;*/
+      }
+      .subtleShine {
+        background-image: radial-gradient(black, grey, black);
+      }
+      .hmShiny {
+        background-image: radial-gradient(black, green, blue, orange, black);
+      }
+      .orangeShiny {
+        background-image: radial-gradient(black, orange, black, orange, black);
+      }
+      .chelseaPurple {
+        background-image: radial-gradient(black, purple, rebeccapurple, purple, black);
+      }
+      .bigBlue {
+        background-image: radial-gradient(black, teal, black, blue, black);
       }
       .shiny2 { /* Mask */
         mix-blend-mode: multiply;
-        background-image: url('images/foil.jpg');
+        background-image: url('images/fabric.jpeg');
         background-size: cover;
         background-position: center;
         background-clip: border-box;
-        opacity: 0.6;
+        opacity: 0.46;
       }
+      .lights {
+        background-image: url('images/lights.jpeg');
+      }
+      .foil {
+        background-image: url('images/foil.jpeg');
+      }
+      .foil2 {
+/*        background-image: url('images/foil2.jpeg');*/
+/*        background-size: 25%;*/
+        background-image: url('images/foil-frame.png');
+      }
+      .stars {
+        background-image: url('images/stars.jpeg');
+        background-size: 125%;
+        opacity: 0.76;
+      }
+      .code {
+        background-image: url('images/code.png');
+        background-size: 95%;
+      }
+      .circuit {
+        background-image: url('images/circuit.jpeg');
+        background-size: 50%;
+        opacity: 0.25;
+      }
+      .binary {
+        background-image: url('images/binary.jpeg');
+        opacity: 0.16;
+      }
+      .cloud {
+        background-image: url('images/cloud.jpeg');
+        background-size: 125%;
+      }
+      .cloud2 {
+        background-image: url('images/cloud2.jpeg');
+      }
+      .wave {
+        background-image: url('images/wave.jpeg');
+/*        background-size: 75%;*/
+/*background-size: 925%;*/
+      }
+      .spiral {
+        background-image: url('images/spiral.jpeg');
+        background-size: 225%;
+      }
+      .circles {
+        background-image: url('images/circles.jpeg');
+/*        background-size: 15%;*/
+      }
+      .hex {
+        background-image: url('images/hex.jpeg');
+        background-size: 25%;
+        opacity: 0.25;
+      }
+      .honey {
+        background-image: url('images/honey.jpeg');
+        background-size: 90%;
+      }
+
     </style>
-    <script type="text/javascript">
-      const pos = {x:0,y:0};
-      const saveCursorPosition = (x, y) => {
-        pos.x = (x / window.innerWidth).toFixed(2);
-        pos.y = (y / window.innerHeight).toFixed(2);
-        document.documentElement.style.setProperty('--x', pos.x * 100 + '%')
-        document.documentElement.style.setProperty('--y', pos.y * 100 + '%')
-      }
-      // document.addEventListener('mousemove', e => saveCursorPosition(e.clientX, e.clientY));
-    </script>
     <title>2022 Holiday Card</title>
   </head>
   <body>
@@ -238,36 +317,46 @@ d&d -
           name: 'David Adams',
           pillar: 'Technology',
           team: 'AdOps',
+          // shiny: 'honey',
+          // shinyColor: 'subtleShine',
         },
         {
           name: 'Brandin Bulicki',
           pillar: 'Technology',
           team: 'Dev Team',
+          // shiny: 'binary',
+          shinyColor: 'subtleShine',
         },
         {
           name: 'Mark Chawla',
           pillar: 'Technology',
           team: 'Dev Team',
+          // shiny: 'binary',
+          shinyColor: 'subtleShine',
         },
         {
           name: 'Nicolette Dankmyer',
           pillar: 'Technology',
           team: 'R&A',
+          // shiny: 'hex',
         },
         {
           name: 'Matthew DeSabato',
           pillar: 'Technology',
           team: 'IT',
+          // shiny: 'spiral',
         },
         {
           name: 'Shawn Dillon',
           pillar: 'Technology',
           team: 'IT',
+          // shiny: 'wave',
         },
         {
           name: 'Conor Elliott',
           pillar: 'Technology',
           team: 'Executive',
+          // shiny: 'circles',
         },
         {
           name: 'Keith Elliott',
@@ -280,13 +369,18 @@ d&d -
           team: 'Dev Team',
           img: 'joe.png',
           notes: '"Already done."',
+          shiny: 'binary',
+          shinyColor: 'subtleShine',
+          // shinyColor: 'hmShiny',
         },
         {
           name: 'Chelsea Fletcher',
           pillar: 'Technology',
           team: 'R&A',
+          // img: 'joe.png',
           cardbg: 'shinypurple',
-          // shiny: true,
+          shiny: 'foil',
+          shinyColor: 'hmShiny',
         },
         {
           name: 'Joey Garrous',
@@ -321,7 +415,8 @@ d&d -
           team: 'Dev Team',
           img: 'john.jpg',
           notes: '"Hack the planet!"',
-          // shiny: true, // TODO: More than one type of shiny
+          shiny: 'code',
+          shinyColor: 'orangeShiny',
         },
         {
           name: 'Tim McWilliams',
@@ -329,6 +424,8 @@ d&d -
           team: 'R&A',
           img: 'tim.jpg',
           notes: '"between every two trees is a doorway to a new world"',
+          shiny: 'lights',
+          shinyColor: 'hmShiny'
         },
         {
           name: 'Jack Mullen',
@@ -341,6 +438,8 @@ d&d -
           team: 'Dev Team',
           img: 'sleepyhank.png',
           notes: '"Facebook is Big Brother."',
+          shiny: 'binary',
+          shinyColor: 'subtleShine',
           // cardbg: 'shinyblue',
         },
         {
@@ -381,7 +480,7 @@ d&d -
           pillar: 'Technology',
           team: 'Dev Team',
           img: 'coffee.png',
-          notes: 'Better than water.',
+          notes: '"Fresh pot!"',
           cardbg: 'shinyblue',
         },
         {
@@ -389,8 +488,10 @@ d&d -
           pillar: 'Technology',
           team: 'Dev Team',
           img: 'synergy.png',
-          notes: '"Circle back on how that ladders up to those action items."',
+          notes: '"Circle back on how those action items ladder up to client KPIs."',
           cardbg: 'shinyblue',
+          shiny: 'stars',
+          shinyColor: 'orangeShiny',
         },
         {
           name: 'Sardis',
@@ -408,27 +509,37 @@ d&d -
           notes: '"Worth the wait."',
           cardbg: 'shinyblue',
         },
+        {
+          name: 'This is fine',
+          pillar: 'Technology',
+          team: 'Dev Team',
+          img: 'fine.png',
+          notes: '"All good."',
+          cardbg: 'shinyblue',
+          shiny: 'foil2',
+          shinyColor: 'orangeShiny',
+        },
+        {
+          name: 'Aliens',
+          pillar: 'Technology',
+          team: 'Dev Team',
+          img: 'aliens.png',
+          notes: '"I know it sounds hard to believe."',
+          cardbg: 'shinyblue',
+        },
+        {
+          name: 'Walk',
+          pillar: 'Technology',
+          team: 'Dev Team',
+          img: 'simply.png',
+          notes: '"One does not simply..."',
+          cardbg: 'shinyblue',
+        },
         // {
-        //   name: 'This is fine',
+        //   name: 'Energy',
         //   pillar: 'Technology',
         //   team: 'Dev Team',
-        //   img: 'fine.png',
-        //   notes: '"All good."',
-        //   cardbg: 'shinyblue',
-        // },
-        // {
-        //   name: 'Aliens',
-        //   pillar: 'Technology',
-        //   team: 'Dev Team',
-        //   img: 'aliens.png',
-        //   notes: '"I know it sounds hard to believe."',
-        //   cardbg: 'shinyblue',
-        // },
-        // {
-        //   name: 'Walk',
-        //   pillar: 'Technology',
-        //   team: 'Dev Team',
-        //   img: 'simply.png',
+        //   img: 'energy.png',
         //   notes: '"One does not simply..."',
         //   cardbg: 'shinyblue',
         // },
@@ -437,13 +548,32 @@ d&d -
       let tech_team_cards = '';
       tech_team.sort(()=> (Math.random() > 0.5)).map(x => {
         if (x.img || true) {
-          tech_team_cards += `<hm-card name='${x.name}' pillar='${x.pillar}' team='${x.team}' img='${x.img}' notes='${x.notes}' cardbg='${x.cardbg}' ${x.rookie ? 'rookie' : ''} ${x.shiny ? 'shiny' : ''}></hm-card>`;
+          tech_team_cards += `<hm-card name='${x.name}' pillar='${x.pillar}' team='${x.team}' img='${x.img}' notes='${x.notes}' cardbg='${x.cardbg}' ${x.rookie ? 'rookie' : ''} ${x.shiny ? `shiny=${x.shiny}` : ''} ${x.shinyColor ? `shinyColor=${x.shinyColor}` : ''}></hm-card>`;
         }
       });
-      console.log(tech_team_cards);
       cardspot.innerHTML = `<div class='cardHolder'>
       ${tech_team_cards}
       </div>`;
+    </script>
+
+    <script type="text/javascript">
+      const pos = {x:0,y:0};
+      const saveCursorPosition = (x, y) => {
+        pos.x = (x / window.innerWidth).toFixed(2);
+        pos.y = (y / window.innerHeight).toFixed(2);
+        // console.log('Bro', x, y, window.innerHeight, window.innerWidth, pos.x, pos.y)
+        document.documentElement.style.setProperty('--x', pos.x * 100 + '%')
+        document.documentElement.style.setProperty('--y', pos.y * 100 + '%')
+        document.documentElement.style.setProperty('--wobble-x', (pos.x * -40 + 20) + 'deg')
+        document.documentElement.style.setProperty('--wobble-y', (pos.y * -20 + 10) + 'deg')
+      }
+      // const cards = document.getElementsByClassName('card');
+      // for (let i = 0; i < cards.length; i++) {
+      //   cards[i].addEventListener('mousemove', e => {
+      //     saveCursorPosition(e.clientX, e.clientY, e.target);
+      //   });
+      // }
+      document.addEventListener('mousemove', e => saveCursorPosition(e.clientX, e.clientY));
     </script>
   </body>
 </html>
