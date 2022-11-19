@@ -21,16 +21,26 @@ class HMCard extends HTMLElement {
     const cardName = this.getAttribute('name');
     const cardId = `card${cardName}`.replaceAll(' ', '');
     let cardClasses = `cardFront`;
-    if (this.hasAttribute('cardbg')) {
+    if (this.hasAttribute('cardbg') && this.getAttribute('cardbg') !== undefined) {
       cardClasses = `cardFront ${this.getAttribute('cardbg')}`;
     }
     let rookieCard = '';
-    if (this.hasAttribute('rookie')) {
+    if (this.hasAttribute('rookie') && this.getAttribute('rookie') !== undefined) {
       rookieCard = `<div class='rookie'>- Rookie Card -</div>`;
     }
-    let shinyStuff = '';
-    if (this.hasAttribute('shiny')) {
-      shinyStuff = `<div class='shiny2'></div><div class='shiny1'></div>`;
+    let shinyStuff = ``;
+    let shinyColor = ``;
+    if (this.hasAttribute('shinyColor') && this.getAttribute('shinyColor') !== undefined) {
+      shinyColor = this.getAttribute('shinyColor');
+    }
+    if (this.hasAttribute('shiny') && this.getAttribute('shiny') !== undefined) {
+      const curShiny = this.getAttribute('shiny');
+      shinyStuff = `<div class='shiny2 ${curShiny}'></div><div class='shiny1 ${shinyColor}'></div>`;
+    }
+    let imgUrl = 'avatar.png'
+    if (this.hasAttribute('img') && this.getAttribute('img') !== "undefined") {
+      imgUrl = this.getAttribute('img');
+      console.log('imgUrl', imgUrl);
     }
     // TODO: tabindex='0' and keyup listeners for enter/space
     // https://developer.mozilla.org/en-US/docs/Web/API/Element/keyup_event
@@ -44,7 +54,7 @@ class HMCard extends HTMLElement {
               ${cardName}
               ${rookieCard}
             </div>
-            <img class='cardFrontImage' src='images/${this.getAttribute('img')}' alt='A photo of ${cardName}' />
+            <img class='cardFrontImage' src='images/${imgUrl}' alt='A photo of ${cardName}' />
             <div class='cardFrontPillarTeam'>
               ${this.getAttribute('pillar')} - ${this.getAttribute('team')}
             </div>
