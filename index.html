@@ -44,16 +44,18 @@ TODO:
         align-items: center;
       }
       .card:hover {
-/*        border: 1px outset red;*/
+        border: 2px outset red;
         cursor: pointer;
       }
       .card[data-flipped="1"] {
-        transform: rotateY(var(--wobble-x)) rotateX(var(--wobble-y));
+/*        transform: rotateY(var(--wobble-x)) rotateX(var(--wobble-y));*/
 /* TODO: Needs to be quick except when flipping... transition: transform 0.76s;*/
+/*animation: wobble 3s ease-in-out alternate infinite;*/
+        transition: transform 0.5s;
       }
       .card[data-flipped="0"] {
         transform: rotateY(180deg) rotateY(var(--wobble-x)) rotateX(var(--wobble-y));
-        transition: transform 0.76s;
+        transition: transform 0.5s;
       }
       /*.card[data-flipped="1"]:hover {
         transform: rotateY(15deg) scale(1.15);
@@ -64,8 +66,9 @@ TODO:
         transition: transform 0.76s;
       }*/
       .card {
-        transform: rotateY(var(--wobble-x)) rotateX(var(--wobble-y));
-        border: 1px solid grey;
+/*        transform: rotateY(var(--wobble-x)) rotateX(var(--wobble-y));*/
+/*        animation: wobble 3s ease-in-out alternate infinite;*/
+        border: 2px solid grey;
         position: relative;
         margin: 1rem;
         height: 20rem;
@@ -74,6 +77,7 @@ TODO:
         -webkit-perspective: 1000px;
         perspective: 1000px;
         transform: rotateY(0deg);
+/*        transition: transform 0.76s;*/
         backface-visibility: visible;
 /*        -moz-backface-visibility: hidden;*/
       }
@@ -125,7 +129,7 @@ TODO:
       .cardBackCircle {
         border-radius: 100%;
         background-color: firebrick;
-        border: 1px inset crimson;
+        border: 2px inset crimson;
         height: 50%;
         width: 50%;
       }
@@ -176,15 +180,29 @@ TODO:
           background-position: 100% 50%;
         }
       }
+      @keyframes wobble {
+        from {
+          transform: rotateY(-30deg) scale(1);
+        } to {
+          transform: rotateY(30deg) scale(1);
+        }
+      }
+      @keyframes wobble2 {
+        from {
+          transform: rotateY(-30deg) scale(2);
+        } to {
+          transform: rotateY(30deg) scale(2);
+        }
+      }
       .shiny1 { /* Specular */
 /*        background-image: linear-gradient(90deg, black, red, white, blue, black);*/
         background-image: radial-gradient(black, green, blue, orange, black);
         mix-blend-mode: color-dodge;
         background-attachment: fixed;
         background-size: 200%;
-        background-position: var(--x) var(--y);
+/*        background-position: var(--x) var(--y);*/
 /*        transition: transform 0.76s;*/
-/*        animation: shine 1s ease-in-out alternate;*/
+/*        animation: shine 3s ease-in-out alternate infinite;*/
       }
       .subtleShine {
         background-image: linear-gradient(90deg, black, grey, black);
@@ -216,6 +234,10 @@ TODO:
       }
       .lights {
         background-image: url('images/lights.jpeg');
+      }
+      .trees {
+        background-image: url('images/trees.png');
+        opacity: 0.76;
       }
       .foil {
         background-image: url('images/foil.jpeg');
@@ -271,6 +293,29 @@ TODO:
       .honey {
         background-image: url('images/honey.jpeg');
         background-size: 90%;
+      }
+      /*  Hover     */
+      @media (pointer: fine) {
+        .card[data-flipped="1"] {
+          transform: rotateY(var(--wobble-x)) rotateX(var(--wobble-y));
+          transition: transform 0.1s;
+        }
+        .shiny1 {
+          background-position: var(--x) var(--y);
+        }
+      }
+      @media (pointer: coarse) {
+        .card {
+          transform: scale(2);
+          margin: 7rem;
+          margin-top: 15rem;
+        }
+        .card[data-flipped="1"] {
+          animation: wobble2 3s ease-in-out alternate infinite;
+        }
+        .shiny1 {
+          animation: shine 3s ease-in-out alternate infinite;
+        }
       }
 
     </style>
@@ -430,7 +475,7 @@ TODO:
           team: 'R&A',
           img: 'tim.jpg',
           notes: '"between every two trees is a doorway to a new world"',
-          shiny: 'lights',
+          shiny: 'trees',
           shinyColor: 'hmShiny'
         },
         {
@@ -525,14 +570,14 @@ TODO:
           shiny: 'foil2',
           shinyColor: 'orangeShiny',
         },
-        {
-          name: 'Aliens',
-          pillar: 'Technology',
-          team: 'Dev Team',
-          img: 'aliens.png',
-          notes: '"I know it sounds hard to believe."',
-          cardbg: 'shinyblue',
-        },
+        // {
+        //   name: 'Aliens',
+        //   pillar: 'Technology',
+        //   team: 'Dev Team',
+        //   img: 'aliens.png',
+        //   notes: '"I know it sounds hard to believe."',
+        //   cardbg: 'shinyblue',
+        // },
         {
           name: 'Walk',
           pillar: 'Technology',
@@ -541,19 +586,22 @@ TODO:
           notes: '"One does not simply..."',
           cardbg: 'shinyblue',
         },
-        // {
-        //   name: 'Energy',
-        //   pillar: 'Technology',
-        //   team: 'Dev Team',
-        //   img: 'energy.png',
-        //   notes: '"One does not simply..."',
-        //   cardbg: 'shinyblue',
-        // },
+        {
+          name: 'Energy Drinks',
+          pillar: 'Technology',
+          team: 'Dev Team',
+          img: 'energy.png',
+          notes: '"Probably not better than water."',
+          cardbg: 'shinyblue',
+        },
       ];
       const cardspot = document.getElementById('cardspot');
       let tech_team_cards = '';
+
+      // tech_team.map(x => {
+      //   if (x.img || x.shiny) {
       tech_team.sort(()=> (Math.random() > 0.5)).map(x => {
-        if (x.img || true) {
+      if (x.img || true) {
           tech_team_cards += `<hm-card name='${x.name}' pillar='${x.pillar}' team='${x.team}' img='${x.img}' notes='${x.notes}' cardbg='${x.cardbg}' ${x.rookie ? 'rookie' : ''} ${x.shiny ? `shiny=${x.shiny}` : ''} ${x.shinyColor ? `shinyColor=${x.shinyColor}` : ''}></hm-card>`;
         }
       });
