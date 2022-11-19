@@ -341,7 +341,7 @@ d&d -
           team: 'Dev Team',
           img: 'sleepyhank.png',
           notes: '"Facebook is Big Brother."',
-          cardbg: 'shinyblue',
+          // cardbg: 'shinyblue',
         },
         {
           name: 'Joshua Pearlman',
@@ -366,27 +366,76 @@ d&d -
           pillar: 'Technology',
           team: 'R&A',
         },
+        // Non-Tech Team folks??
         // TODO: Non-people cards?
+        {
+          name: 'Tequila',
+          pillar: 'Technology',
+          team: 'R&A',
+          img: 'tequila.png',
+          notes: 'Better than water.',
+          cardbg: 'shinyblue',
+        },
+        {
+          name: 'Coffee',
+          pillar: 'Technology',
+          team: 'Dev Team',
+          img: 'coffee.png',
+          notes: 'Better than water.',
+          cardbg: 'shinyblue',
+        },
+        {
+          name: 'Synergy',
+          pillar: 'Technology',
+          team: 'Dev Team',
+          img: 'synergy.png',
+          notes: '"Circle back on how that ladders up to those action items."',
+          cardbg: 'shinyblue',
+        },
+        {
+          name: 'Sardis',
+          pillar: 'Technology',
+          team: 'Dev Team',
+          img: 'sardis.png',
+          notes: '"Half marinated Purdue Farm fresh, Grade A, all natural charcoal roasted rotisserie chicken. Served with two regular sides."',
+          cardbg: 'shinyblue',
+        },
+        {
+          name: 'Food Truck',
+          pillar: 'Technology',
+          team: 'Dev Team',
+          img: 'foodtruck.png',
+          notes: '"Worth the wait."',
+          cardbg: 'shinyblue',
+        },
         // {
-        //   name: 'Tequila',
+        //   name: 'This is fine',
         //   pillar: 'Technology',
-        //   team: 'R&A',
-        //   img: 'tequila.png',
-        //   notes: 'Better than water.',
+        //   team: 'Dev Team',
+        //   img: 'fine.png',
+        //   notes: '"All good."',
         //   cardbg: 'shinyblue',
         // },
         // {
-        //   name: 'Coffee',
+        //   name: 'Aliens',
         //   pillar: 'Technology',
         //   team: 'Dev Team',
-        //   img: 'coffee.png',
-        //   notes: 'Better than water.',
+        //   img: 'aliens.png',
+        //   notes: '"I know it sounds hard to believe."',
+        //   cardbg: 'shinyblue',
+        // },
+        // {
+        //   name: 'Walk',
+        //   pillar: 'Technology',
+        //   team: 'Dev Team',
+        //   img: 'simply.png',
+        //   notes: '"One does not simply..."',
         //   cardbg: 'shinyblue',
         // },
       ];
       const cardspot = document.getElementById('cardspot');
       let tech_team_cards = '';
-      tech_team.map(x => {
+      tech_team.sort(()=> (Math.random() > 0.5)).map(x => {
         if (x.img || true) {
           tech_team_cards += `<hm-card name='${x.name}' pillar='${x.pillar}' team='${x.team}' img='${x.img}' notes='${x.notes}' cardbg='${x.cardbg}' ${x.rookie ? 'rookie' : ''} ${x.shiny ? 'shiny' : ''}></hm-card>`;
         }
