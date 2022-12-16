@@ -1,612 +1,337 @@
-<!--
-tequilla
-sardees
-d&d - 
-
-default avatars
-TODO:
-- Holographic cards
-- 3d card wobble
-- playable????
-- Square Photos for everyone
-- Quotes for everyone
-- custom bgcolors if anyone wants
-- flip animation now really sudden...
-
-
-
- -->
 <html>
   <head>
-    <link rel='stylesheet' src='index.css' />
     <script src='hmcards.js'></script>
-    <style type='text/css'>
-      * {
-/*        border: 1px dashed orange;*/
-      }
-      body {
-        background-color: black;
-        color: gold;
-        font-family: sans-serif;
-      }
-      .pageheader {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-      .cardHolder {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        width: 100vw;
-        justify-content: center;
-        align-items: center;
-      }
-      .card:hover {
-        border: 2px outset red;
-        cursor: pointer;
-      }
-      .card[data-flipped="1"] {
-/*        transform: rotateY(var(--wobble-x)) rotateX(var(--wobble-y));*/
-/* TODO: Needs to be quick except when flipping... transition: transform 0.76s;*/
-/*animation: wobble 3s ease-in-out alternate infinite;*/
-        transition: transform 0.5s;
-      }
-      .card[data-flipped="0"] {
-        transform: rotateY(180deg) rotateY(var(--wobble-x)) rotateX(var(--wobble-y));
-        transition: transform 0.5s;
-      }
-      /*.card[data-flipped="1"]:hover {
-        transform: rotateY(15deg) scale(1.15);
-        transition: transform 0.76s;
-      }*/
-      /*.card[data-flipped="0"]:hover {
-        transform: rotateY(195deg) rotateX(15deg);
-        transition: transform 0.76s;
-      }*/
-      .card {
-/*        transform: rotateY(var(--wobble-x)) rotateX(var(--wobble-y));*/
-/*        animation: wobble 3s ease-in-out alternate infinite;*/
-        border: 2px solid grey;
-        position: relative;
-        margin: 1rem;
-        height: 20rem;
-        width: 12rem;
-        transform-style: preserve-3d;
-        -webkit-perspective: 1000px;
-        perspective: 1000px;
-        transform: rotateY(0deg);
-/*        transition: transform 0.76s;*/
-        backface-visibility: visible;
-/*        -moz-backface-visibility: hidden;*/
-      }
-      .cardInner {
-        transform: rotateY(0deg);
-        transform-style: preserve-3d;
-        backface-visibility: visible;
-        position: absolute;
-        height: 100%;
-        width: 100%;
-      }
-      .cardFront, .cardBack {
-        transform: rotateY(0deg);
-        transform-style: preserve-3d;
-        -webkit-backface-visibility: hidden;
-        -moz-backface-visibility: hidden;
-        backface-visibility: hidden;
-      }
-      .cardFront {
-        transform: rotateY(0deg);
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        background-color: coral;
-        -webkit-backface-visibility: hidden;
-        -moz-backface-visibility: hidden;
-        backface-visibility: hidden;
-        color: black;
-/*        opacity: 0;*/
-      }
-      .shinyblue {
-        background-color: skyblue;
-      }
-      .shinypurple {
-        background-color: rebeccapurple;
-        filter: brightness(2.0);
-      }
-      .cardBack {
-        transform: rotateY(180deg);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        width: 100%;
-        background-color: red;
-/*        border: 10px dashed red;*/
-
-      }
-      .cardBackCircle {
-        border-radius: 100%;
-        background-color: firebrick;
-        border: 2px inset crimson;
-        height: 50%;
-        width: 50%;
-      }
-      .cardFrontName {
-        font-size: 1.25rem;
-        padding: 0.25rem;
-      }
-      .cardFrontPillarTeam {
-        font-family: monospace;
-        font-size: 1rem;
-        padding: 0.25rem;
-      }
-      .rookie {
-        border: 1px outset green;
-        background-color: limegreen;
-        font-size: 0.75rem;
-        float: right;
-        padding: 0.2rem;
-        margin: 0.2rem;
-        border-radius: 0.5rem;
-
-        position: absolute;
-        right: 0;
-      }
-      .cardFrontImage {
-        width: 100%;
-        min-height: 1rem;
-        aspect-ratio: 1 / 1;
-        background: radial-gradient(gold, gray);
-/*        z-index: 100;*/
-      }
-      .cardFrontNotes {
-        font-family: serif;
-        padding: 0.25rem;
-        font-size: 0.76rem;
-        font-style: italic;
-      }
-      .shiny1, .shiny2 {
-/*        background-color: red;*/
-        position: absolute;
-        height: 100%;
-        width: 100%;
-      }
-      @keyframes shine {
-        from {
-          background-position: 0% 50%;
-        } to {
-          background-position: 100% 50%;
-        }
-      }
-      @keyframes wobble {
-        from {
-          transform: rotateY(-30deg) scale(1);
-        } to {
-          transform: rotateY(30deg) scale(1);
-        }
-      }
-      @keyframes wobble2 {
-        from {
-          transform: rotateY(-30deg) scale(2);
-        } to {
-          transform: rotateY(30deg) scale(2);
-        }
-      }
-      .shiny1 { /* Specular */
-/*        background-image: linear-gradient(90deg, black, red, white, blue, black);*/
-        background-image: radial-gradient(black, green, blue, orange, black);
-        mix-blend-mode: color-dodge;
-        background-attachment: fixed;
-        background-size: 200%;
-/*        background-position: var(--x) var(--y);*/
-/*        transition: transform 0.76s;*/
-/*        animation: shine 3s ease-in-out alternate infinite;*/
-      }
-      .subtleShine {
-        background-image: linear-gradient(90deg, black, grey, black);
-/*        background-image: radial-gradient(black, grey, black);*/
-      }
-      .hmShiny {
-        background-image: linear-gradient(90deg, black, green, blue, orange, black);
-/*        background-image: radial-gradient(black, green, blue, orange, black);*/
-      }
-      .orangeShiny {
-        background-image: linear-gradient(90deg, black, orange, black);
-/*        background-image: radial-gradient(black, orange, black);*/
-      }
-      .chelseaPurple {
-        background-image: linear-gradient(90deg, black, purple, rebeccapurple, purple, black);
-/*        background-image: radial-gradient(black, purple, rebeccapurple, purple, black);*/
-      }
-      .bigBlue {
-        background-image: linear-gradient(90deg, black, teal, blue, black);
-/*        background-image: radial-gradient(black, teal, blue, black);*/
-      }
-      .shiny2 { /* Mask */
-        mix-blend-mode: multiply;
-        background-image: url('images/fabric.jpeg');
-        background-size: cover;
-        background-position: center;
-        background-clip: border-box;
-        opacity: 0.46;
-      }
-      .lights {
-        background-image: url('images/lights.jpeg');
-      }
-      .trees {
-        background-image: url('images/trees.png');
-        opacity: 0.76;
-      }
-      .foil {
-        background-image: url('images/foil.jpeg');
-      }
-      .foil2 {
-/*        background-image: url('images/foil2.jpeg');*/
-/*        background-size: 25%;*/
-        background-image: url('images/foil-frame.png');
-      }
-      .stars {
-        background-image: url('images/stars.jpeg');
-        background-size: 125%;
-        opacity: 0.76;
-      }
-      .code {
-        background-image: url('images/code.png');
-        background-size: 95%;
-      }
-      .circuit {
-        background-image: url('images/circuit.jpeg');
-        background-size: 50%;
-        opacity: 0.25;
-      }
-      .binary {
-        background-image: url('images/binary.jpeg');
-        opacity: 0.16;
-      }
-      .cloud {
-        background-image: url('images/cloud.jpeg');
-        background-size: 125%;
-      }
-      .cloud2 {
-        background-image: url('images/cloud2.jpeg');
-      }
-      .wave {
-        background-image: url('images/wave.jpeg');
-/*        background-size: 75%;*/
-/*background-size: 925%;*/
-      }
-      .spiral {
-        background-image: url('images/spiral.jpeg');
-        background-size: 225%;
-      }
-      .circles {
-        background-image: url('images/circles.jpeg');
-/*        background-size: 15%;*/
-      }
-      .hex {
-        background-image: url('images/hex.jpeg');
-        background-size: 25%;
-        opacity: 0.25;
-      }
-      .honey {
-        background-image: url('images/honey.jpeg');
-        background-size: 90%;
-      }
-      /*  Hover     */
-      @media (pointer: fine) {
-        .card[data-flipped="1"] {
-          transform: rotateY(var(--wobble-x)) rotateX(var(--wobble-y));
-          transition: transform 0.1s;
-        }
-        .shiny1 {
-          background-position: var(--x) var(--y);
-        }
-      }
-      @media (pointer: coarse) {
-        .card {
-          transform: scale(2);
-          margin: 7rem;
-          margin-top: 15rem;
-        }
-        .card[data-flipped="1"] {
-          animation: wobble2 3s ease-in-out alternate infinite;
-        }
-        .shiny1 {
-          animation: shine 3s ease-in-out alternate infinite;
-        }
-      }
-
-    </style>
     <title>2022 Holiday Card</title>
   </head>
   <body>
     <div class='pageheader'>
-      <h1>Happy Holidays</h1>
-      <div>2022</div>
+      <h1>
+        Happy (2022) Holidays
+      </h1>
+      <!-- TODO: is this a feature people want?
+      <div class='explainer'>
+        - Move mouse to tilt cards -
+      </div>
+      -->
     </div>
-    <!-- <div class='cardHolder'>
+    <!-- Example hm-card usage
+    <div class='cardHolder'>
       <hm-card
         name='John'
         img='john.jpg'
-        notes='"When you are here, you are family."'
+        notes='When you are here, you are family.'
       ></hm-card>
-      <hm-card
-        name='Hank'
-        img='sleepyhank.png'
-        notes='"Facebook is Big Brother."'
-      ></hm-card>
-      <hm-card
-        name='Tequila'
-        img='tequila.png'
-        notes='Better than water.'
-        cardbg='shinyblue'
-      ></hm-card>
-      <hm-card
-        name='Joe'
-        img='joe.png'
-        notes='"Already done."'
-      ></hm-card>
-      <hm-card
-        name='Jared'
-        img='jaredrookie.png'
-        notes='"Shawn!"'
-        rookie
-      ></hm-card>
-      <hm-card
-        name='David'
-        img='davehat.png'
-        notes='"My bucket-hat gives me unlimited super-human media abilities!"'
-      ></hm-card>
-    </div> -->
-    <div id='cardspot'></div>
+    </div>
+    -->
+    <div id='cardspot'>
+      <!-- We will use JavaScript to set this element's innerHTML and fill it with cards! -->
+    </div>
     <script type="text/javascript">
+      // Props common to each team
+      const devTeamProps = {
+        pillar: 'Technology',
+        team: 'Dev Team',
+        backgroundimage: 'images/code.png',
+        backgroundsize: '115%',
+        opacity: 0.333,
+        shinycolor: 'orange',
+      };
+      const itTeamProps = {
+        pillar: 'Technology',
+        team: 'IT',
+        backgroundimage: 'images/binary.jpeg',
+        backgroundsize: 'cover',
+        opacity: 0.222,
+        // shinycolor: 'green',
+      };
+      const raTeamProps = {
+        pillar: 'Technology',
+        team: 'R&A',
+        backgroundimage: 'images/trees.png',
+        shinycolor: 'orange, green, blue',
+        backgroundsize: 'cover',
+        opacity: 0.333,
+      };
+      const adOpsProps = {
+        pillar: 'Technology',
+        team: 'AdOps',
+        backgroundimage: 'images/honey.jpeg',
+        shinycolor: 'orange, green, blue',
+        backgroundsize: 'cover',
+        opacity: 0.222,
+      }
       const tech_team = [
-        {
-          name: 'David Adams',
-          pillar: 'Technology',
-          team: 'AdOps',
-          // shiny: 'honey',
-          // shinyColor: 'subtleShine',
-        },
-        {
-          name: 'Brandin Bulicki',
-          pillar: 'Technology',
-          team: 'Dev Team',
-          // shiny: 'binary',
-          shinyColor: 'subtleShine',
-        },
-        {
-          name: 'Mark Chawla',
-          pillar: 'Technology',
-          team: 'Dev Team',
-          // shiny: 'binary',
-          shinyColor: 'subtleShine',
-        },
-        {
-          name: 'Nicolette Dankmyer',
-          pillar: 'Technology',
-          team: 'R&A',
-          // shiny: 'hex',
-        },
-        {
-          name: 'Matthew DeSabato',
-          pillar: 'Technology',
-          team: 'IT',
-          // shiny: 'spiral',
-        },
-        {
-          name: 'Shawn Dillon',
-          pillar: 'Technology',
-          team: 'IT',
-          // shiny: 'wave',
-        },
-        {
-          name: 'Conor Elliott',
-          pillar: 'Technology',
-          team: 'Executive',
-          // shiny: 'circles',
-        },
-        {
-          name: 'Keith Elliott',
-          pillar: 'Technology',
-          team: 'R&A',
-        },
-        {
-          name: 'Joe Fedorowicz',
-          pillar: 'Technology',
-          team: 'Dev Team',
-          img: 'joe.png',
-          notes: '"Already done."',
-          shiny: 'binary',
-          shinyColor: 'subtleShine',
-          // shinyColor: 'hmShiny',
-        },
-        {
-          name: 'Chelsea Fletcher',
-          pillar: 'Technology',
-          team: 'R&A',
-          // img: 'joe.png',
-          cardbg: 'shinypurple',
-          // shiny: 'foil',
-          shiny: 'foil2',
-          shinyColor: 'hmShiny',
-        },
-        {
-          name: 'Joey Garrous',
-          pillar: 'Technology',
-          team: 'AdOps',
-        },
-        {
-          name: 'Robert Heimbach',
-          pillar: 'Technology',
-          team: 'AdOps',
-          notes: 'Sleaves optional',
-        },
-        {
-          name: 'Zena Johnson',
-          pillar: 'Technology',
-          team: 'AdOps',
-        },
-        {
-          name: 'Reuben Martinez',
-          pillar: 'Technology',
-          team: 'R&A',
-          notes: '"I will take the ring to Mordor."',
-        },
-        {
-          name: 'Michael Maten',
-          pillar: 'Technology',
-          team: 'R&A',
-        },
-        {
-          name: 'John McCabe',
-          pillar: 'Technology',
-          team: 'Dev Team',
-          img: 'john.jpg',
-          notes: '"Hack the planet!"',
-          shiny: 'code',
-          shinyColor: 'orangeShiny',
-        },
-        {
-          name: 'Tim McWilliams',
-          pillar: 'Technology',
-          team: 'R&A',
-          img: 'tim.jpg',
-          notes: '"between every two trees is a doorway to a new world"',
-          shiny: 'trees',
-          shinyColor: 'hmShiny'
-        },
-        {
-          name: 'Jack Mullen',
-          pillar: 'Technology',
-          team: 'AdOps',
-        },
-        {
-          name: 'Hank Mushinski',
-          pillar: 'Technology',
-          team: 'Dev Team',
-          img: 'sleepyhank.png',
-          notes: '"Facebook is Big Brother."',
-          shiny: 'binary',
-          shinyColor: 'subtleShine',
-          // cardbg: 'shinyblue',
-        },
-        {
-          name: 'Joshua Pearlman',
-          pillar: 'Technology',
-          team: 'IT',
-        },
-        {
-          name: 'Matthew Printz',
-          pillar: 'Technology',
-          team: 'IT',
-        },
-        {
-          name: 'Jared Rudenstein',
-          pillar: 'Technology',
-          team: 'IT',
-          img: 'jaredrookie.png',
-          notes: '"Shawn!"',
-          rookie: true,
-        },
-        {
-          name: 'Eva Vukich',
-          pillar: 'Technology',
-          team: 'R&A',
-          img: 'eva.jpg',
-          notes:'“I’m not superstitious, but I am a little stitious.”',
-          shiny: 'trees',
-          shinyColor: 'hmShiny',
-        },
-        // Non-Tech Team folks??
-        // TODO: Non-people cards?
-        {
-          name: 'Tequila',
-          pillar: 'Technology',
-          team: 'R&A',
-          img: 'tequila.png',
-          notes: 'Better than water.',
-          cardbg: 'shinyblue',
-        },
-        {
-          name: 'Coffee',
-          pillar: 'Technology',
-          team: 'Dev Team',
-          img: 'coffee.png',
-          notes: '"Fresh pot!"',
-          cardbg: 'shinyblue',
-        },
-        {
-          name: 'Synergy',
-          pillar: 'Technology',
-          team: 'Dev Team',
-          img: 'synergy.png',
-          notes: '"Circle back on how those action items ladder up to client KPIs."',
-          cardbg: 'shinyblue',
-          shiny: 'stars',
-          shinyColor: 'orangeShiny',
-        },
-        {
-          name: 'Sardis',
-          pillar: 'Technology',
-          team: 'Dev Team',
-          img: 'sardis.png',
-          notes: '"Half marinated Purdue Farm fresh, Grade A, all natural charcoal roasted rotisserie chicken. Served with two regular sides."',
-          cardbg: 'shinyblue',
-        },
-        {
-          name: 'Food Truck',
-          pillar: 'Technology',
-          team: 'Dev Team',
-          img: 'foodtruck.png',
-          notes: '"Worth the wait."',
-          cardbg: 'shinyblue',
-        },
-        {
-          name: 'This is fine',
-          pillar: 'Technology',
-          team: 'Dev Team',
-          img: 'fine.png',
-          notes: '"All good."',
-          cardbg: 'shinyblue',
-          shiny: 'foil2',
-          shinyColor: 'orangeShiny',
-        },
-        // {
-        //   name: 'Aliens',
-        //   pillar: 'Technology',
-        //   team: 'Dev Team',
-        //   img: 'aliens.png',
-        //   notes: '"I know it sounds hard to believe."',
-        //   cardbg: 'shinyblue',
-        // },
-        {
-          name: 'Walk',
-          pillar: 'Technology',
-          team: 'Dev Team',
-          img: 'simply.png',
-          notes: '"One does not simply..."',
-          cardbg: 'shinyblue',
-        },
-        {
-          name: 'Energy Drinks',
-          pillar: 'Technology',
-          team: 'Dev Team',
-          img: 'energy.png',
-          notes: '"Probably not better than water."',
-          cardbg: 'shinyblue',
-        },
+          {
+            name: 'David Adams',
+            ...adOpsProps,
+            // img: '',
+            // notes: '',
+          },
+          {
+            name: 'Brandin Bulicki',
+            ...devTeamProps,
+            // img: '',
+            // notes: '',
+          },
+          {
+            name: 'Mark Chawla',
+            ...devTeamProps,
+            // img: '',
+            // notes: '',
+          },
+          {
+            name: 'Nicolette Dankmyer',
+            ...raTeamProps,
+            // img: '',
+            // notes: '',
+          },
+          {
+            name: 'Matthew DeSabato',
+            ...itTeamProps,
+            // img: '',
+            // notes: '',
+          },
+          {
+            name: 'Shawn Dillon',
+            ...itTeamProps,
+            // img: '',
+            // notes: '',
+          },
+          {
+            name: 'Conor Elliott',
+            pillar: 'Technology',
+            team: 'Executive',
+            img: 'conor.jpeg',
+            notes: 'ELE - Everybody love everybody',
+            shinycolor: 'blue, teal', // TODO: who knows
+            backgroundimage: 'images/teton.jpeg',
+            backgroundposition: 'bottom',
+          },
+          {
+            name: 'Keith Elliott',
+            ...raTeamProps,
+            // img: '',
+            // notes: '',
+          },
+          {
+            name: 'Joe Fedorowicz',
+            ...devTeamProps,
+            img: 'joe.png',
+            notes: 'Already done.',
+          },
+          {
+            name: 'Chelsea Fletcher',
+            ...raTeamProps,
+            // img: '',
+            // notes: '',
+            backgroundcolor: 'fuschia',
+            backgroundimage: 'images/foil-frame.png',
+          },
+          {
+            name: 'Joey Garrous',
+            ...adOpsProps,
+            // img: '',
+            // notes: '',
+          },
+          {
+            name: 'Robert Heimbach',
+            pillar: 'Technology',
+            ...adOpsProps,
+            // img: '',
+            // notes: '',
+          },
+          {
+            name: 'Zena Johnson',
+            pillar: 'Technology',
+            ...adOpsProps,
+            // img: '',
+            // notes: '',
+          },
+          {
+            name: 'Reuben Martinez',
+            ...raTeamProps,
+            // img: '',
+            // notes: '',
+            notes: 'I will take the ring to Mordor.',
+          },
+          {
+            name: 'Michael Maten',
+            ...raTeamProps,
+            // img: '',
+            // notes: '',
+          },
+          {
+            name: 'John McCabe',
+            ...devTeamProps,
+            img: 'john.jpg',
+            notes: 'Hack the planet!',
+            // backgroundimage: 'images/code.png',
+            // backgroundsize: '95%',
+            // opacity: 0.333,
+            // shinycolor: 'orange',
+            
+          },
+          {
+            name: 'Tim McWilliams',
+            ...raTeamProps,
+            img: 'tim.jpg',
+            notes: 'between every two trees is a doorway to a new world',
+          },
+          {
+            name: 'Jack Mullen',
+            ...adOpsProps,
+            // img: '',
+            // notes: '',
+          },
+          {
+            name: 'Hank Mushinski',
+            ...devTeamProps,
+            img: 'hank.jpeg',
+            notes: 'Facebook is Big Brother.',
+            shiny: 'nebula2',
+            shinycolor: 'black, gray, gold, gray, black',
+            // cardbg: 'shinyblue',
+          },
+          {
+            name: 'Joshua Pearlman',
+            ...itTeamProps,
+            // img: '',
+            // notes: '',
+          },
+          {
+            name: 'Matthew Printz',
+            ...itTeamProps,
+            // img: '',
+            // notes: '',
+          },
+          {
+            name: 'Jared Rudenstein',
+            ...itTeamProps,
+            img: 'jaredrookie.png',
+            notes: 'Shawn!',
+            rookie: true,
+            // shiny: 'link',
+          },
+          {
+            name: 'Eva Vukich',
+            ...raTeamProps,
+            img: 'eva.jpg',
+            notes: 'I\'m not not superstitious, but I am a little stitious.',
+          },
+          // Non-Tech Team folks??
+          // TODO: Non-people cards? what should the team/pillar say?
+          // TODO: More
+          // - Pets! Dogs and Cats and more
+          // - Client somethings...
+          // 
+          // {
+          //   name: 'Tequila',
+          //   img: 'tequila.png',
+          //   pillar: 'Technology',
+          //   team: 'Thing', // TODO: uhhh team thing?
+          //   notes: 'Better than water.',
+          //   cardbg: 'shinyblue',
+          // },
+          // {
+          //   name: 'Coffee',
+          //   pillar: 'Technology',
+          //   team: 'Thing',
+          //   img: 'coffee.png',
+          //   notes: 'Fresh pot!',
+          //   cardbg: 'shinyblue',
+          // },
+          // {
+          //   name: 'Synergy',
+          //   pillar: 'Technology',
+          //   team: 'Thing',
+          //   img: 'synergy.png',
+          //   notes: 'Circle back on how those action items ladder up to client KPIs.',
+          //   cardbg: 'shinyblue',
+          //   shiny: 'stars',
+          //   shinyColor: 'orangeShiny',
+          // },
+          // {
+          //   name: 'Sardis',
+          //   pillar: 'Technology',
+          //   team: 'Dev Team',
+          //   img: 'sardis.png',
+          //   notes: 'Half marinated Purdue Farm fresh, Grade A, all natural charcoal roasted rotisserie chicken. Served with two regular sides.',
+          //   cardbg: 'shinyblue',
+          // },
+          // {
+          //   name: 'Food Truck',
+          //   pillar: 'Technology',
+          //   team: 'Dev Team',
+          //   img: 'foodtruck.png',
+          //   notes: 'Worth the wait.',
+          //   cardbg: 'shinyblue',
+          // },
+          // {
+          //   name: 'This is fine',
+          //   pillar: 'Technology',
+          //   team: 'Dev Team',
+          //   img: 'fine.png',
+          //   notes: 'All good.',
+          //   cardbg: 'shinyblue',
+          //   shiny: 'foil2',
+          //   shinyColor: 'orangeShiny',
+          // },
+          // {
+          //   name: 'Aliens',
+          //   pillar: 'Technology',
+          //   team: 'Dev Team',
+          //   img: 'aliens.png',
+          //   notes: 'I know it sounds hard to believe.',
+          //   cardbg: 'shinyblue',
+          // },
+          // {
+          //   name: 'Walk',
+          //   pillar: 'Technology',
+          //   team: 'Dev Team',
+          //   img: 'simply.png',
+          //   notes: 'One does not simply...',
+          //   cardbg: 'shinyblue',
+          // },
+          // {
+          //   name: 'Energy Drinks',
+          //   pillar: 'Technology',
+          //   team: 'Dev Team',
+          //   img: 'energy.png',
+          //   notes: 'Probably not better than water.',
+          //   cardbg: 'shinyblue',
+          // },
       ];
+      const getCardForPerson = x => {
+        let attrString = '';
+        Object.keys(x).map(y => {
+          attrString += `${y}="${x[y]}" `
+        });
+        /*
+          name='${x.name}'
+          pillar='${x.pillar}'
+          team='${x.team}'
+          img='${x.img}'
+          notes='${x.notes}'
+          cardbg='${x.cardbg}'
+          ${x.rookie ? 'rookie' : ''}
+          ${x.shiny ? `shiny=${x.shiny}` : ''}
+          ${x.shinyColor ? `shinyColor=${x.shinyColor}` : ''}
+          backgroundImage=${x.backgroundImage}
+          backgroundsize=${x.backgroundsize}
+          backgroundColor=${x.backgroundColor}
+          opacity=${x.backgroundOpacity}
+        */
+        return `<hm-card ${attrString}></hm-card>`;
+      }
       const cardspot = document.getElementById('cardspot');
       let tech_team_cards = '';
 
-      // tech_team.map(x => {
-      //   if (x.img || x.shiny) {
-      tech_team.sort(()=> (Math.random() > 0.5)).map(x => {
-      if (x.img || true) {
-          tech_team_cards += `<hm-card name='${x.name}' pillar='${x.pillar}' team='${x.team}' img='${x.img}' notes='${x.notes}' cardbg='${x.cardbg}' ${x.rookie ? 'rookie' : ''} ${x.shiny ? `shiny=${x.shiny}` : ''} ${x.shinyColor ? `shinyColor=${x.shinyColor}` : ''}></hm-card>`;
+      tech_team.map(x => {
+        // Shuffle?
+        // tech_team.sort(()=> (Math.random() > 0.5)).map(x => {
+        if (x.img || true) {
+            // tech_team_cards += `<hm-card name='${x.name}' pillar='${x.pillar}' team='${x.team}' img='${x.img}' notes='${x.notes}' cardbg='${x.cardbg}' ${x.rookie ? 'rookie' : ''} ${x.shiny ? `shiny=${x.shiny}` : ''} ${x.shinyColor ? `shinyColor=${x.shinyColor}` : ''}></hm-card>`;
+          tech_team_cards += getCardForPerson(x);
         }
       });
       cardspot.innerHTML = `<div class='cardHolder'>
@@ -615,6 +340,8 @@ TODO:
     </script>
 
     <script type="text/javascript">
+      // Use Mouse X,Y to make all the cards wobble
+      // TODO: Only need to do this on devices with cursor.
       const pos = {x:0,y:0};
       const saveCursorPosition = (x, y) => {
         pos.x = (x / window.innerWidth).toFixed(2);
