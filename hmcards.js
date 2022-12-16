@@ -1,6 +1,6 @@
 // hmcards.js - Harmelin Media Cards made w/ CSS
 const flipCard = (targetCardId) => {
-  return // just forget it
+  // return // just forget it
   // One function to rule them (cards) all
   let targetCard = targetCardId;
   if (typeof(targetCardId) === "string") {
@@ -45,12 +45,9 @@ const styleString = `
       }
       .card[data-flipped="1"] {
 /*        transform: rotateY(var(--wobble-x)) rotateX(var(--wobble-y));*/
+        transform: scale(1);
 /* TODO: Needs to be quick except when flipping... transition: transform 0.76s;*/
 /*animation: wobble 3s ease-in-out alternate infinite;*/
-        transition: transform 0.5s;
-      }
-      .card[data-flipped="0"] {
-        transform: rotateY(180deg) rotateY(var(--wobble-x)) rotateX(var(--wobble-y));
         transition: transform 0.5s;
       }
       /*.card[data-flipped="1"]:hover {
@@ -179,6 +176,20 @@ const styleString = `
           transform: rotateY(-30deg) scale(1);
         } to {
           transform: rotateY(30deg) scale(1);
+        }
+      }
+      @keyframes flipOnce {
+        from {
+          transform: rotateX(30deg);
+        } to {
+          transform: rotateX(360deg);
+        }
+      }
+      @keyframes wobbleBig {
+        from {
+          transform: rotateY(-30deg) scale(1.25);
+        } to {
+          transform: rotateY(30deg) scale(1.25);
         }
       }
       @keyframes wobble2 {
@@ -401,12 +412,26 @@ const styleString = `
       }
       /* Auto-Wobble...
         */
+      .card {
+        animation: wobble 3s ease-in-out alternate infinite;
+      }
       .card[data-flipped="1"] {
-          animation: wobble 3s ease-in-out alternate infinite;
-        }
-        .shiny1 {
-          animation: shine 3s ease-in-out alternate infinite;
-        }
+        transform: scale(1);
+        margin: 2.5em;
+        animation: wobble 3s ease-in-out alternate infinite;
+      }
+      .card[data-flipped="0"] {
+        transform: scale(2);
+        margin: 2.5em;
+        transition: transform 2s;
+        animation: wobbleBig 3s ease-in-out alternate infinite;
+      }
+      .card[data-flipped="0"] .cardInner {
+        animation: flipOnce 1s ease-in-out;
+      }
+      .shiny1 {
+        animation: shine 3s ease-in-out alternate infinite;
+      }
       /* On devices with a mouse, let the relative position of the cursor wobble all the cards */
       @media (pointer: fine) {
         .card[data-flipped="1"] {
@@ -440,7 +465,7 @@ class HMCard extends HTMLElement {
     super();
   }
   connectedCallback() {
-    console.log('Bro', this.attributes, this.attributes['name'], this.attributes['backgroundcolor']);
+    console.log('HMCard connectedCallback', this.attributes, this.attributes['name'], this.attributes['backgroundcolor']);
     const cardName = this.getAttribute('name');
     const cardId = `card${cardName}`.replaceAll(' ', '');
     let cardClasses = `cardFront`;
