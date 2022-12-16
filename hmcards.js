@@ -164,6 +164,13 @@ const styleString = `
         height: 100%;
         width: 100%;
       }
+      @keyframes shineBig {
+        from {
+          background-position: 20% 40%;
+        } to {
+          background-position: 80% 60%;
+        }
+      }
       @keyframes shine {
         from {
           background-position: 0% 50%;
@@ -428,6 +435,9 @@ const styleString = `
       }
       .card[data-flipped="0"] .cardInner {
         animation: flipOnce 1s ease-in-out;
+      }
+      .card[data-flipped="0"] .shiny1 {
+        animation: shineBig 3s ease-in-out alternate infinite;
       }
       .shiny1 {
         animation: shine 3s ease-in-out alternate infinite;
