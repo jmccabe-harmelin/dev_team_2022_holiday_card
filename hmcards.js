@@ -421,15 +421,14 @@ const styleString = `
         */
       .card {
         animation: wobble 3s ease-in-out alternate infinite;
+        margin: 3em;
       }
       .card[data-flipped="1"] {
         transform: scale(1);
-        margin: 2.5em;
         animation: wobble 3s ease-in-out alternate infinite;
       }
       .card[data-flipped="0"] {
         transform: scale(2);
-        margin: 2.5em;
         transition: transform 2s;
         animation: wobbleBig 3s ease-in-out alternate infinite;
       }
@@ -452,7 +451,7 @@ const styleString = `
           background-position: var(--x) var(--y);
         }
       }
-      /* On touch (coarse) devices use a wobble animation to shimy the cards back and forth (there by showing off the holographic effects) */
+      /* On touch (coarse) devices use a wobble animation to shimy the cards back and forth (there by showing off the holographic effects)
       @media (pointer: coarse) {
         .card {
           transform: scale(1.5);
@@ -468,7 +467,7 @@ const styleString = `
         .explainer {
           display: none;
         }
-      }
+      } */
 `;
 class HMCard extends HTMLElement {
   constructor() {
