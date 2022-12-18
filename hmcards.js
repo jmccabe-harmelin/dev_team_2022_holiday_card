@@ -441,7 +441,7 @@ const styleString = `
       .shiny1 {
         animation: shine 3s ease-in-out alternate infinite;
       }
-      /* On devices with a mouse, let the relative position of the cursor wobble all the cards */
+      /* On devices with a mouse, let the relative position of the cursor wobble all the cards
       @media (pointer: fine) {
         .card[data-flipped="1"] {
           transform: rotateY(var(--wobble-x)) rotateX(var(--wobble-y));
@@ -450,7 +450,7 @@ const styleString = `
         .shiny1 {
           background-position: var(--x) var(--y);
         }
-      }
+      } */
       /* On touch (coarse) devices use a wobble animation to shimy the cards back and forth (there by showing off the holographic effects)
       @media (pointer: coarse) {
         .card {
