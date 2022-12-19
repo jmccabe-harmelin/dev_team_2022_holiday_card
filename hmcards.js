@@ -15,14 +15,43 @@ const flipCard = (targetCardId) => {
   targetCard.dataset.flipped = targetCard.dataset?.flipped === '0' ? '1' : '0'
 }
 
-const styleString = `
-      * {
-/*        border: 1px dashed orange;*/
+/*
+TODO: Establish Card interaction basics
+- mobile friendly
+- touch friendly
+- focus in on 1 card
+- disable animations
+
+- 
+*/
+
+
+
+/* Mouse Interaction Code
+
+  transform: rotateY(var(--wobble-x)) rotateX(var(--wobble-y));
+  transform: rotateY(var(--wobble-x)) rotateX(var(--wobble-y));
+  background-position: var(--x) var(--y);
+  transition: transform 0.76s;
+  animation: shine 3s ease-in-out alternate infinite;
+-- On devices with a mouse, let the relative position of the cursor wobble all the cards
+    @media (pointer: fine) {
+      .card[data-flipped="1"] {
+        transform: rotateY(var(--wobble-x)) rotateX(var(--wobble-y));
+        transition: transform 0.1s;
       }
+      .shiny1 {
+        background-position: var(--x) var(--y);
+      }
+      
+
+*/
+
+const styleString = `
       body {
         background-color: black;
         color: gold;
-        font-family: sans-serif;
+        font-family: 'Gill Sans', 'Gill Sans MT', 'Cabin', sans-serif;
       }
       .pageheader {
         display: flex;
@@ -39,42 +68,21 @@ const styleString = `
         align-items: center;
       }
       .card:hover {
-        border: 2px outset limegreen;
         cursor: pointer;
-        
       }
-      .card[data-flipped="1"] {
-/*        transform: rotateY(var(--wobble-x)) rotateX(var(--wobble-y));*/
-        transform: scale(1);
-/* TODO: Needs to be quick except when flipping... transition: transform 0.76s;*/
-/*animation: wobble 3s ease-in-out alternate infinite;*/
-        transition: transform 0.5s;
-      }
-      /*.card[data-flipped="1"]:hover {
-        transform: rotateY(15deg) scale(1.15);
-        transition: transform 0.76s;
-      }*/
-      /*.card[data-flipped="0"]:hover {
-        transform: rotateY(195deg) rotateX(15deg);
-        transition: transform 0.76s;
-      }*/
       .card {
-/*        transform: rotateY(var(--wobble-x)) rotateX(var(--wobble-y));*/
-/*        animation: wobble 3s ease-in-out alternate infinite;*/
-        border: 2px solid grey;
         position: relative;
-        margin: 1rem;
+        margin: 3em;
         height: 20rem;
         width: 12rem;
         transform-style: preserve-3d;
         -webkit-perspective: 1000px;
         perspective: 1000px;
         transform: rotateY(0deg) rotateX(0deg);
-/*        transition: transform 0.76s;*/
         backface-visibility: visible;
-/*        -moz-backface-visibility: hidden;*/
       }
       .cardInner {
+        border: 2px solid grey;
         transform: rotateY(0deg);
         transform-style: preserve-3d;
         backface-visibility: visible;
@@ -94,19 +102,10 @@ const styleString = `
         position: absolute;
         height: 100%;
         width: 100%;
-/*        background-color: coral;*/
         -webkit-backface-visibility: hidden;
         -moz-backface-visibility: hidden;
         backface-visibility: hidden;
         color: black;
-/*        opacity: 0;*/
-      }
-      .shinyblue {
-        background-color: skyblue;
-      }
-      .shinypurple {
-        background-color: rebeccapurple;
-        filter: brightness(2.0);
       }
       .cardBack {
         transform: rotateY(180deg);
@@ -116,8 +115,6 @@ const styleString = `
         height: 100%;
         width: 100%;
         background-color: red;
-/*        border: 10px dashed red;*/
-
       }
       .cardBackCircle {
         border-radius: 100%;
@@ -127,13 +124,14 @@ const styleString = `
         width: 50%;
       }
       .cardFrontName {
-        font-size: 1.25rem;
+        font-size: 1.25em;
         padding: 0.25rem;
+        font-weight: 600;
       }
       .cardFrontPillarTeam {
-        font-family: monospace;
-        font-size: 1rem;
+        font-size: 0.75rem;
         padding: 0.25rem;
+        letter-spacing: 0.2rem;
       }
       .rookie {
         border: 1px outset green;
@@ -143,7 +141,6 @@ const styleString = `
         padding: 0.2rem;
         margin: 0.2rem;
         border-radius: 0.5rem;
-
         position: absolute;
         right: 0;
       }
@@ -153,13 +150,12 @@ const styleString = `
         aspect-ratio: 1 / 1;
       }
       .cardFrontNotes {
-        font-family: serif;
         padding: 0.25rem;
-        font-size: 0.76rem;
+        font-size: 0.976rem;
         font-style: italic;
+        font-weight: 300;
       }
       .shiny1, .shiny2 {
-/*        background-color: red;*/
         position: absolute;
         height: 100%;
         width: 100%;
@@ -192,6 +188,13 @@ const styleString = `
           transform: rotateX(360deg);
         }
       }
+      @keyframes flipOnce2 {
+        from {
+          transform: scale(1.25);
+        } to {
+          transform: scale(1);
+        }
+      }
       @keyframes wobbleBig {
         from {
           transform: rotateY(-30deg) scale(1.25);
@@ -213,29 +216,6 @@ const styleString = `
         background-attachment: fixed;
         background-size: 200%;
         opacity: 0.46;
-/*        background-position: var(--x) var(--y);*/
-/*        transition: transform 0.76s;*/
-/*        animation: shine 3s ease-in-out alternate infinite;*/
-      }
-      .subtleShine {
-        background-image: linear-gradient(90deg, black, grey, black);
-/*        background-image: radial-gradient(black, grey, black);*/
-      }
-      .hmShiny {
-        background-image: linear-gradient(90deg, black, green, blue, orange, black);
-/*        background-image: radial-gradient(black, green, blue, orange, black);*/
-      }
-      .orangeShiny {
-        background-image: linear-gradient(90deg, black, orange, black);
-/*        background-image: radial-gradient(black, orange, black);*/
-      }
-      .chelseaPurple {
-        background-image: linear-gradient(90deg, black, purple, rebeccapurple, purple, black);
-/*        background-image: radial-gradient(black, purple, rebeccapurple, purple, black);*/
-      }
-      .bigBlue {
-        background-image: linear-gradient(90deg, black, teal, blue, black);
-/*        background-image: radial-gradient(black, teal, blue, black);*/
       }
       .shiny2 { /* Mask */
         mix-blend-mode: multiply;
@@ -247,189 +227,19 @@ const styleString = `
         background-clip: border-box;
         opacity: 0.46;
       }
-      .trees {
-        background-image: url('images/trees.png');
-      }
-      .foil {
-        background-image: url('images/foil.jpeg');
-      }
-      .foil2 {
-/*        background-image: url('images/foil2.jpeg');*/
-/*        background-size: 25%;*/
-        background-image: url('images/foil-frame.png');
-      }
-      .stars {
-        background-image: url('images/stars.jpeg');
-        background-size: 125%;
-        opacity: 0.76;
-      }
-      .code {
-        background-image: url('images/code.png');
-        background-size: 95%;
-      }
-      .circuit {
-        background-image: url('images/circuit.jpeg');
-        background-size: 190%;
-        opacity: 0.25;
-        background-position: bottom right;
-      }
-      .binary {
-        background-image: url('images/binary.jpeg');
-        opacity: 0.16;
-      }
-      .cloud {
-        background-image: url('images/cloud.jpeg');
-        background-size: 125%;
-      }
-      .cloud2 {
-        background-image: url('images/cloud2.jpeg');
-      }
-      .wave {
-        background-image: url('images/wave.jpeg');
-/*        background-size: 75%;*/
-/*background-size: 925%;*/
-      }
-      .spiral {
-        background-image: url('images/spiral.jpeg');
-        background-size: 225%;
-      }
-      .circles {
-        background-image: url('images/circles.jpeg');
-/*        background-size: 15%;*/
-      }
-      .hex {
-        background-image: url('images/hex.jpeg');
-        background-size: 25%;
-        opacity: 0.25;
-      }
-      .honey {
-        background-image: url('images/honey.jpeg');
-        background-size: 90%;
-      }
-      .glass {
-        /* TODO: no       */
-        background-image: url('images/glass.jpeg');
-        /*        background-size: 200%; */
-      }
-      .chia {
-        background-image: url('images/chia.jpeg');
-        background-size: contain;
-
-        opacity: 0.1;
-      }
-      .adrian {
-        background-image: url('images/adrian.jpeg');
-        background-size: 25%;
-      }
-      .snowflake {
-        background-image: url('images/snowflake.jpeg');
-      }
-      .snowflake2 {
-        background-image: url('images/snowflake2.jpeg');
-      }
-      .snow2 {
-        background-image: url('images/snow2.jpeg');
-        background-size: 525%;
-      }
-      .moon {
-        background-image: url('images/moon.jpeg');
-        background-size: 325%;
-      }
-      .moon2 {
-        background-image: url('images/moon2.jpeg');
-        background-size: 525%;
-      }
-      .teton {
-        background-image: url('images/teton.jpeg');
-        background-size: 125%;
-        background-position: bottom;
-      }
-      .teton2 {
-        background-image: url('images/teton2.jpeg');
-        background-size: 525%;
-      }
-      .bark {
-        background-image: url('images/bark.jpeg');
-/*        background-size: 525%;*/
-      }
-      .bark2 {
-        background-image: url('images/bark2.jpeg');
-      }
-      .tile {
-        background-image: url('images/tile.jpeg');
-      }
-      .tile2 {
-        background-image: url('images/tile2.jpeg');
-        background-size: 25%;
-      }
-      .wood {
-        background-image: url('images/wood.jpeg');
-        background-size: 50%;
-      }
-      .wood2 {
-        background-image: url('images/wood2.jpeg');
-        background-size: 50%;
-      }
-      .scales {
-        background-image: url('images/scales.jpeg');
-        
-      }
-      .underwater {
-        background-image: url('images/underwater.jpeg');
-        
-      }
-      .snow {
-        background-image: url('images/snow.jpeg');
-        
-      }
-      .nebula {
-        background-image: url('images/nebula.jpeg');
-        background-size: 150%;
-        background-position: bottom left;
-      }
-      .nebula2 {
-        background-image: url('images/nebula.jpeg');
-        background-size: 250%;
-        background-position: bottom right;
-      }
-      .stucco {
-        background-image: url('images/stucco.png');
-      }
-      .waves2 {
-        background-image: url('images/waves2.png');
-        background-size: 150%;
-        opacity: 0.25;
-      }
-      .brick {
-        background-image: url('images/brick.png');
-        filter: blur(1px);
-/*        background-size: 75%;*/
-      }
-      .snow2 {
-        background-image: url('images/snow2.png');
-      }
-      .triangles {
-        background-image: url('images/triangles.jpeg');
-        background-size: contain;
-        opacity: 0.1;
-      }
+      
       .link {
         background-image: url('https://harmelin.com/wp-content/uploads/2019/09/HM_CorporateLogo_RGB.png');
         background-size: contain;
       }
-      /* Auto-Wobble...
-        */
-      .card {
-        animation: wobble 3s ease-in-out alternate infinite;
-        margin: 3em;
-      }
+      
       .card[data-flipped="1"] {
         transform: scale(1);
-        animation: wobble 3s ease-in-out alternate infinite;
+      }
+      .card[data-flipped="1"] .cardInner {
+        animation: flipOnce2 1s ease-in-out;
       }
       .card[data-flipped="0"] {
-        transform: scale(2);
-        transition: transform 2s;
         animation: wobbleBig 3s ease-in-out alternate infinite;
       }
       .card[data-flipped="0"] .cardInner {
@@ -438,36 +248,6 @@ const styleString = `
       .card[data-flipped="0"] .shiny1 {
         animation: shineBig 3s ease-in-out alternate infinite;
       }
-      .shiny1 {
-        animation: shine 3s ease-in-out alternate infinite;
-      }
-      /* On devices with a mouse, let the relative position of the cursor wobble all the cards
-      @media (pointer: fine) {
-        .card[data-flipped="1"] {
-          transform: rotateY(var(--wobble-x)) rotateX(var(--wobble-y));
-          transition: transform 0.1s;
-        }
-        .shiny1 {
-          background-position: var(--x) var(--y);
-        }
-      } */
-      /* On touch (coarse) devices use a wobble animation to shimy the cards back and forth (there by showing off the holographic effects)
-      @media (pointer: coarse) {
-        .card {
-          transform: scale(1.5);
-          margin: 5rem;
-          margin-top: 10rem;
-        }
-        .card[data-flipped="1"] {
-          animation: wobble2 3s ease-in-out alternate infinite;
-        }
-        .shiny1 {
-          animation: shine 3s ease-in-out alternate infinite;
-        }
-        .explainer {
-          display: none;
-        }
-      } */
 `;
 class HMCard extends HTMLElement {
   constructor() {
@@ -486,7 +266,7 @@ class HMCard extends HTMLElement {
       rookieCard = `<div class='rookie'>- Rookie Card -</div>`;
     }
     let shinyStuff = `<div id='${cardId}Shiny2' class='shiny2'></div><div id='${cardId}Shiny1' class='shiny1'></div>`;
-    let shinyColor = `subtleShine`;
+    let shinyColor = `white`;
     if (this.hasAttribute('shinyColor') && this.getAttribute('shinyColor') !== 'undefined') {
       shinyColor = this.getAttribute('shinyColor');
     }
