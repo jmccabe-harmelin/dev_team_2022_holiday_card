@@ -59,6 +59,21 @@ const styleString = `
         justify-content: center;
         align-items: center;
       }
+      .linkToSource {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin: 5em;
+      }
+      .linkToSource a {
+        font-size: 1.5em;
+        color: gold;
+      }
+      .linkToSource a:hover {
+        color: yellow;
+      }
       .cardHolder {
         display: flex;
         flex-direction: row;
