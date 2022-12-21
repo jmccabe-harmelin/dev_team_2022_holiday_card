@@ -6,7 +6,6 @@ const flipCard = (targetCardId) => {
   if (typeof(targetCardId) === "string") {
     targetCard = document.getElementById(targetCardId);
   }
-  console.log('targetCard', targetCard);
   // TODO: Consider resetting all the other cards
   // const cards = document.getElementsByClassName('card')
   // for (let i = 0; i < cards.length; i++) {
@@ -48,32 +47,7 @@ TODO: Establish Card interaction basics
 */
 
 const styleString = `
-      body {
-        background-color: black;
-        color: gold;
-        font-family: 'Gill Sans', 'Gill Sans MT', 'Cabin', sans-serif;
-      }
-      .pageheader {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-      .linkToSource {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        margin: 5em;
-      }
-      .linkToSource a {
-        font-size: 1.5em;
-        color: gold;
-      }
-      .linkToSource a:hover {
-        color: yellow;
-      }
+      
       .cardHolder {
         display: flex;
         flex-direction: row;
@@ -269,7 +243,6 @@ class HMCard extends HTMLElement {
     super();
   }
   connectedCallback() {
-    console.log('HMCard connectedCallback', this.attributes, this.attributes['name'], this.attributes['backgroundcolor']);
     const cardName = this.getAttribute('name');
     const cardId = `card${cardName}`.replaceAll(' ', '');
     let cardClasses = `cardFront`;
@@ -296,7 +269,6 @@ class HMCard extends HTMLElement {
     const bgColor = this.hasAttribute('backgroundcolor') && this.getAttribute('backgroundcolor') !== "undefined"
       ? this.getAttribute('backgroundcolor')
       : false;
-    console.log(cardId, bgColor);
     const bgImage = this.hasAttribute('backgroundimage') && this.getAttribute('backgroundimage') !== "undefined"
       ? this.getAttribute('backgroundimage')
       : false;
@@ -309,13 +281,9 @@ class HMCard extends HTMLElement {
     const bgOpacity = this.hasAttribute('opacity') && this.getAttribute('opacity') !== "undefined"
       ? this.getAttribute('opacity')
       : 'center';
-      console.log('bgOpacity');
-      console.log(bgOpacity);
-      console.log(typeof(bgOpacity));
     const shinyGradientColors = this.hasAttribute('shinycolor') && this.getAttribute('shinycolor') !== "undefined"
       ? this.getAttribute('shinycolor')
       : 'gray';
-    console.log(shinyGradientColors);
     // TODO: tabindex='0' and keyup listeners for enter/space
     // https://developer.mozilla.org/en-US/docs/Web/API/Element/keyup_event
 
@@ -367,4 +335,5 @@ class HMCard extends HTMLElement {
     </div>`;
   }
 }
+
 customElements.define('hm-card', HMCard);

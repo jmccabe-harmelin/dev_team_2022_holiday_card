@@ -2,12 +2,46 @@
   <head>
     <script src='hmcards.js'></script>
     <title>2022 Holiday Card</title>
+    <style type='text/css'>
+      body {
+        background-color: black;
+        color: gold;
+        font-family: 'Gill Sans', 'Gill Sans MT', 'Cabin', sans-serif;
+      }
+      .pageheader {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .linkToSource {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin: 5em;
+      }
+      .a {
+        font-size: 1.5em;
+        color: gold;
+      }
+      a:visited {
+        color: coral;
+      }
+      a:hover {
+        color: yellow;
+      }
+    </style>
   </head>
   <body>
     <div class='pageheader'>
       <h1>
         Happy (2022) Holidays
       </h1>
+      <p>
+        from the Harmelin Media Technology Pillar
+      </p>
       <!-- TODO: is this a feature people want?
       <div class='explainer'>
         - Move mouse to tilt cards -
@@ -26,8 +60,8 @@
     <div id="cardspot">
       <!-- We will use JavaScript to set this element's innerHTML and fill it with cards! -->
     </div>
-    <div id="linkToSource">
-      <a href="https://github.com/jmccabe-harmelin/dev_team_2022_holiday_card">Source Code</a>
+    <div class="linkToSource">
+      <a href="https://github.com/jmccabe-harmelin/dev_team_2022_holiday_card">View the Source Code</a>
     </div>
     <script type="text/javascript">
       // Props common to each team
@@ -87,7 +121,7 @@
             name: 'Nicolette Dankmyer',
             ...raTeamProps,
             img: 'nicolette.jpg',
-            notes: 'Happy Holidays everyone! :)',
+            notes: 'You\'re entitled to your wrong opinions, and Merry Christmas everyone! :)',
           },
           {
             name: 'Matthew DeSabato',
@@ -332,6 +366,7 @@
       const cardspot = document.getElementById('cardspot');
       let tech_team_cards = '';
 
+      // TODO: Order by random, team, tenure, abc, 
       tech_team.map(x => {
         // Shuffle?
         // tech_team.sort(()=> (Math.random() > 0.5)).map(x => {
